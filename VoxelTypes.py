@@ -1,7 +1,7 @@
 from ursina import *
 
 class Voxel(Button):
-    def __init__(self, Block, position=(0,0,0)):
+    def __init__(self, Block, position=(0,0,0), metadata={}):
         print(f"Block {Block.name} has been added with model {Block.model}")
         super().__init__(parent=scene,
             position=position,
@@ -11,6 +11,7 @@ class Voxel(Button):
             color=color.color(0, 0, 1),
             highlight_color=color.lime,
         )
+        self.metadata = metadata
 class Block():
     def __init__(self, name, id, block_model):
         print(f"Block {id} has been defined")
@@ -19,16 +20,18 @@ class Block():
         self.texture = block_model.texture
         self.color = block_model.color
         self.model = block_model.model
+        self.item = Item(name, id, block_model.texture, block_model)
 
 class Model():
     def __init__(self, texture, color, model):
-        print(f"Block model {id} has been defined")
+        print(f"Model {id} has been defined")
         self.texture = texture
         self.color = color
         self.model = model
 
 class Crosshair(Entity):
     def __init__(self):
+        print("Crosshair has been initalized")
         super().__init__(
             model='quad',
             texture='crosshair', 
@@ -41,6 +44,7 @@ class Crosshair(Entity):
 
 class PauseMenu(Entity):
     def __init__(self, player):
+        print("Pause menu has been initalized")
         self.player = player
         super().__init__(
             parent=camera.ui,
@@ -83,3 +87,10 @@ class Item():
         self.invtext = invtext
         self.model = model
         print(f"Item {id} has been defined")
+
+class float3():
+    def __init__(self, x=0, y=0, z=0):
+        self.x = x
+        self.y = y
+        self.z = z
+

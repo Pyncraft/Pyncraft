@@ -6,10 +6,6 @@ from WorldGeneration import GenerateWorld
 
 app = Ursina()
 
-
-
-
-
 GenerateWorld(1)
 
 
@@ -29,6 +25,7 @@ def input(key):
         pause_menu.enabled = True
         mouse.locked = False
         player.enabled = False
+    print(f"Key {key} pressed")
 
 
 
