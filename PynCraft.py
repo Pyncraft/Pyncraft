@@ -1,18 +1,16 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from VoxelTypes import *
-from Blocks import *
-
+from Objects import *
+from WorldGeneration import GenerateWorld
 
 app = Ursina()
-Cursor(texture="crosshair")
-window.title = 'PynCraft' 
 
 
 
-for z in range(30):
-    for x in range(30):
-        voxel = Voxel(Block=dirt, position=(x,0,z))
+
+
+GenerateWorld(1)
 
 
 def input(key):
@@ -24,9 +22,24 @@ def input(key):
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
         if hit_info.hit:
             destroy(mouse.hovered_entity)
-    if key == "escape":
-        exit()
+    if key == "escape" and pause_menu.enabled:
+        pause_menu.close_menu()
+        mouse.locked = True
+    elif key == "escape":
+        pause_menu.enabled = True
+        mouse.locked = False
+        player.enabled = False
+
 
 
 player = FirstPersonController()
+crosshair = Crosshair()
+
+window.title = 'PynCraft' 
+window.show_ursina_splash = False
+player.cursor = False
+
+pause_menu = PauseMenu(player)
+
+
 app.run()
