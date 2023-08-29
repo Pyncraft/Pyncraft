@@ -1,6 +1,3 @@
-from ursina import *
-from VoxelTypes import *
-
-
+from exceptions import *
 def create_blockitem_id(namespace="internal", name=""):
     return namespace + ":" + name

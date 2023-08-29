@@ -1,4 +1,4 @@
-from Modding import *
+from utils import *
 from VoxelTypes import Block
 from VoxelTypes import Model
 from ursina import *
