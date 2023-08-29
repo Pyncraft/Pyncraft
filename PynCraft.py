@@ -25,6 +25,9 @@ def input(key):
         pause_menu.enabled = True
         mouse.locked = False
         player.enabled = False
+    for i in range(10):
+        if held_keys[str(i+1)]:
+            hotbar.select_slot(i)
     print(f"Key {key} pressed")
 
 
@@ -37,6 +40,7 @@ window.show_ursina_splash = False
 player.cursor = False
 
 pause_menu = PauseMenu(player)
+hotbar = Hotbar(num_slots=10)
 
 
 app.run()
