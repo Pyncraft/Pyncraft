@@ -13,7 +13,10 @@ def input(key):
     if key == 'right mouse down':
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
         if hit_info.hit:
-            Voxel(Block=cobblestone, position=hit_info.entity.position + hit_info.normal)
+            try:
+                Voxel(Block=hotbar.items[hotbar.selected_slot].block, position=hit_info.entity.position + hit_info.normal)
+            except AttributeError:
+                print("Placed nil block")
     if key == 'left mouse down' and mouse.hovered_entity:
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
         if hit_info.hit:
@@ -41,6 +44,12 @@ player.cursor = False
 
 pause_menu = PauseMenu(player)
 hotbar = Hotbar(num_slots=10)
+
+hotbar.add_item(cobblestone().item, 128, 0)
+hotbar.add_item(dirt().item, 128, 1)
+hotbar.add_item(cobblestonesphere().item, 128, 2)
+
+
 
 
 app.run()

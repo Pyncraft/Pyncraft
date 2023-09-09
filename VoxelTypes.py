@@ -2,7 +2,7 @@ from ursina import *
 
 class Voxel(Button):
     def __init__(self, Block, position=(0,0,0), metadata={}):
-        print(f"Block {Block.name} has been added with model {Block.model}")
+        print(f"A Voxel of block {Block.name} has been added with model {Block.model}")
         super().__init__(parent=scene,
             position=position,
             model=Block.model,
@@ -13,14 +13,16 @@ class Voxel(Button):
         )
         self.metadata = metadata
 class Block():
-    def __init__(self, name, id, block_model):
-        print(f"Block {id} has been defined")
-        self.name = name
-        self.id = id
-        self.texture = block_model.texture
-        self.color = block_model.color
-        self.model = block_model.model
-        self.item = Item(name, id, block_model.texture, block_model)
+    #def __init__(self, name, id, block_model):
+    #    print(f"Block {id} has been defined")
+    #    self.name = name
+    #    self.id = id
+    #    self.texture = block_model.texture
+    #    self.color = block_model.color
+    #    self.model = block_model.model
+    #    self.item = Item(name, id, block_model.texture, block_model)
+    #    self.item.isBlockItem = True
+    null = 0 # Fixes an error, a no-op
 
 class Model():
     def __init__(self, texture, color, model):
@@ -86,6 +88,8 @@ class Item():
         self.id = id
         self.invtext = invtext
         self.model = model
+        self.isBlockItem = False
+        self.whenClicked = print(f"Item {self.name} has been interacted with")
         print(f"Item {id} has been defined")
 
 class float3():
@@ -101,20 +105,22 @@ class Hotbar(Entity):
         super().__init__(parent=camera.ui, scale=0.1, position=(-0.45, -0.4))
         self.num_slots = num_slots
         self.selected_slot = 0
-        self.items = [None] * num_slots  # Initialize the items list with None for each slot
+        self.count = [0,0,0,0,0,0,0,0,0,0]
+        self.items = [Item("None", "null", None, None)] * num_slots  # Initialize with default items
 
         # Create slots using item.invtext for the texture
+        self.slots = []
         for i in range(num_slots):
             slot = Button(
                 parent=self,
                 model='quad',
-                texture=self.items[i].invtext if self.items[i] else 'white_cube',  # Use item.invtext for the texture
+                texture=self.items[i].invtext,
                 color=color.color(1, 1, 1),
                 position=(0.8 * i, 0),
                 scale=0.8,  # Adjust the scale as needed for your textures
                 on_click=Func(self.select_slot, i)
             )
-            self.items.append(slot)
+            self.slots.append(slot)
 
         # Highlight the selected slot
         self.highlight_selected_slot()
@@ -124,8 +130,18 @@ class Hotbar(Entity):
         self.highlight_selected_slot()
 
     def highlight_selected_slot(self):
-        for i, slot in enumerate(self.items):
+        for i, slot in enumerate(self.slots):
             if i == self.selected_slot:
-                slot.color = color.lime  # Highlighted color
+                slot.color = color.white  # Highlighted color
             else:
-                slot.color = color.color(1, 1, 1)  # Default color
+                slot.color = color.gray  # Default color
+
+    def add_item(self, item, count, slot_index):
+        self.items[slot_index] = item
+        if item.isBlockItem == True:
+            self.slots[slot_index].texture = item.invtext
+        else:
+            self.slots[slot_index].texture = item.invtext
+        self.slots[slot_index].texture = item.invtext  # Update the texture
+        self.count[slot_index] = count
+    
