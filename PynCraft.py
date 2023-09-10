@@ -1,12 +1,13 @@
 from ursina import *
+from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from VoxelTypes import *
 from Objects import *
 from WorldGeneration import GenerateWorld
+from utils import get_current_commit_hash
 
 app = Ursina()
 
-GenerateWorld(1)
 
 
 def input(key):
@@ -33,7 +34,9 @@ def input(key):
             hotbar.select_slot(i)
     print(f"Key {key} pressed")
 
+ver = "0.1"
 
+GenerateWorld(1)
 
 player = FirstPersonController()
 crosshair = Crosshair()
@@ -44,6 +47,8 @@ player.cursor = False
 
 pause_menu = PauseMenu(player)
 hotbar = Hotbar(num_slots=10)
+text_entity = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
+
 
 hotbar.add_item(cobblestone().item, 128, 0)
 hotbar.add_item(dirt().item, 128, 1)
