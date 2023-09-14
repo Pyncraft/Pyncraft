@@ -1,5 +1,6 @@
 from exceptions import *
 import subprocess
+import pickle
 
 def get_current_commit_hash():
     try:
@@ -15,3 +16,12 @@ def get_current_commit_hash():
 
 def create_blockitem_id(namespace="internal", name=""):
     return namespace + ":" + name
+
+def save_class(obj, file_path):
+    with open(file_path, "wb") as file:
+        pickle.dump(obj, file)
+
+def load_class(file_path):
+    with open(file_path, "rb") as file:
+        return pickle.load(file)
+

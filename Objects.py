@@ -31,4 +31,6 @@ class cobblestone(Block):
         self.item.block = self
 
 class cobblestonesphere(cobblestone):
-    model = "sphere"
+    def __init__(self):
+        super().__init__()
+        self.model = "sphere"
