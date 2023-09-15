@@ -3,9 +3,10 @@ from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from VoxelTypes import *
 from Objects import *
-from WorldGeneration import GenerateWorld
+from WorldGeneration import GenerateWorld, World
 from utils import get_current_commit_hash
 import configparser
+import json
 
 app = Ursina()
 
@@ -16,7 +17,7 @@ def input(key):
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
         if hit_info.hit:
             try:
-                world.blocks[f"{hit_info.entity.position[0]}-{hit_info.entity.position[1]}-{hit_info.entity.position[2]}"] = Voxel(Block=hotbar.items[hotbar.selected_slot].block, position=hit_info.entity.position + hit_info.normal)
+                Voxel(Block=hotbar.items[hotbar.selected_slot].block, position=hit_info.entity.position + hit_info.normal)
             except AttributeError:
                 print("Placed nil block")
     if key == 'left mouse down' and mouse.hovered_entity:
@@ -35,9 +36,11 @@ def input(key):
             hotbar.select_slot(i)
     print(f"Key {key} pressed")
 
+def update():
+    nllu = 0
+
 ver = "0.1"
 
-world = GenerateWorld(1)
 
 config = configparser.ConfigParser()
 config.read('conf.ini')
@@ -69,6 +72,7 @@ hotbar.add_item(cobblestonesphere().item, 128, 2)
 
 
 
+save_class(GenerateWorld(1), "wrld.pk1")
 
 
 app.run()

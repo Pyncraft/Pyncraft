@@ -10,5 +10,5 @@ class World():
     blocks = {}
     playerpos = (0,0,0)
     hotbar = None
-    
+    hotbarcount = None
 

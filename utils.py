@@ -1,6 +1,8 @@
 from exceptions import *
 import subprocess
-import pickle
+import dill as pickle
+import json
+import VoxelTypes
 
 def get_current_commit_hash():
     try:
@@ -24,4 +26,7 @@ def save_class(obj, file_path):
 def load_class(file_path):
     with open(file_path, "rb") as file:
         return pickle.load(file)
+
+def add_block(block, position, world):
+    return VoxelTypes.Voxel(Block=block, position=position)
 
