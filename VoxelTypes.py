@@ -92,12 +92,6 @@ class Item():
         self.whenClicked = print(f"Item {self.name} has been interacted with")
         print(f"Item {id} has been defined")
 
-class float3():
-    def __init__(self, x=0, y=0, z=0):
-        self.x = x
-        self.y = y
-        self.z = z
-
 
 
 class Hotbar(Entity):

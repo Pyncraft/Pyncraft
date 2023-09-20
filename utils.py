@@ -1,6 +1,8 @@
 from exceptions import *
 import subprocess
-import pickle
+import dill as pickle
+import json
+import VoxelTypes
 
 def get_current_commit_hash():
     try:
@@ -19,9 +21,20 @@ def create_blockitem_id(namespace="internal", name=""):
 
 def save_class(obj, file_path):
     with open(file_path, "wb") as file:
-        pickle.dump(obj, file)
+        pickle.dump(savetuple(obj), file)
 
 def load_class(file_path):
     with open(file_path, "rb") as file:
-        return pickle.load(file)
+        return restoretuple(pickle.load(file))
+
+def add_block(block, position, world):
+    return VoxelTypes.Voxel(Block=block, position=position)
+
+def savetuple(obj):
+    return (obj.__class__, obj.__dict__)
+
+def restoretuple(cls, attributes):
+    obj = cls.__new__(cls)
+    obj.__dict__.update(attributes)
+    return obj
 
