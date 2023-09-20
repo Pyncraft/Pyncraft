@@ -65,6 +65,8 @@ hotbar = Hotbar(num_slots=10)
 text_entity = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
 
 
+
+
 hotbar.add_item(cobblestone().item, 128, 0)
 hotbar.add_item(dirt().item, 128, 1)
 hotbar.add_item(cobblestonesphere().item, 128, 2)
@@ -72,7 +74,7 @@ hotbar.add_item(cobblestonesphere().item, 128, 2)
 
 
 
-save_class(GenerateWorld(1), "wrld.pk1")
+print(save_class(GenerateWorld(1), "wrld.pk1"))
 
 
 app.run()
