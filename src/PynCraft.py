@@ -46,19 +46,31 @@ config = configparser.ConfigParser()
 config.read('conf.ini')
 
 player = FirstPersonController()
-if config['Camera']['Orthographic'] == "True":
-    print("Crosshair disabled")
-else:
-    crosshair = Crosshair()
 
 
 window.title = 'PynCraft' 
 window.show_ursina_splash = False
 player.cursor = False
 
-camera.orthographic = config['Camera']['Orthographic'] == "True"
-camera.fov = config['Camera']['FOV']  # Adjust the field of view as needed
-camera.clip_plane_far = config['Camera']['ClipPlaneFar']
+print(vars(config))
+try:
+    if config['Camera']['Orthographic'] == "True":
+        print("Crosshair disabled")
+    else:
+        crosshair = Crosshair()
+except Exception:
+    crosshair = Crosshair()
+
+confdisabled = True
+
+if confdisabled == False:
+    camera.orthographic = config['Camera']['Orthographic'] == "True"
+    camera.fov = config['Camera']['FOV']  # Adjust the field of view as needed
+    camera.clip_plane_far = config['Camera']['ClipPlaneFar']
+else:
+    camera.orthographic = False
+    camera.fov = 90
+    camera.clip_plane_far = 100
 
 pause_menu = PauseMenu(player)
 hotbar = Hotbar(num_slots=10)
@@ -72,9 +84,10 @@ hotbar.add_item(dirt().item, 128, 1)
 hotbar.add_item(cobblestonesphere().item, 128, 2)
 
 
+wrld = GenerateWorld(1)
 
 
-print(save_class(GenerateWorld(1), "wrld.pk1"))
 
+wrld.Load(loadfile("dirt.wrld"))
 
 app.run()
