@@ -37,8 +37,8 @@ def input(key):
     print(f"Key {key} pressed")
 
 def update():
-    nllu = 0
-
+    if player.y < -255:
+        player.y = 255
 ver = "0.1"
 
 
