@@ -7,6 +7,7 @@ from WorldGeneration import GenerateWorld, World
 from utils import get_current_commit_hash
 import configparser
 import json
+import modloader
 
 app = Ursina()
 
@@ -62,7 +63,20 @@ camera.clip_plane_far = config['Camera']['ClipPlaneFar']
 
 pause_menu = PauseMenu(player)
 hotbar = Hotbar(num_slots=10)
-text_entity = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
+version_text = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
+
+modloader.modVars = {
+    "pausemenu": pause_menu,
+    "hotbar": hotbar,
+    "versiontext": version_text,
+    "camera": camera,
+    "config": config,
+    "player": player,
+    "window": window,
+    "app": app,
+    "ver": ver,
+    "crosshair": crosshair
+}
 
 
 
