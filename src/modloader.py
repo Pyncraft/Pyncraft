@@ -1,11 +1,13 @@
-import importlib
-import VoxelTypes as VT, utils as UT, WorldGeneration as WG
+import importlib, importlib.util, importlib.resources, importlib.abc
+import os, sys
 modVars = {}
 class Mod:
     def __init__(self, module):
-        self.module = importlib.import_module(module)
+        self.module = importlib.import_module(name=module)
         self.run_function("mod_pointinit", modVars)
         self.run_function("mod_init")
+        
+        print(f"Mod {module} finished INIT!")
     def run_function(self, function_name, *args, **kwargs):
         if hasattr(self.module, function_name) and callable(getattr(self.module, function_name)):
             function_to_run = getattr(self.module, function_name)
@@ -22,3 +24,23 @@ class Mod:
         self.module = None
     module = None
     
+class ModArray():
+    @staticmethod
+    def init():
+        sys.path.append("mods")
+    mods = {}
+    def Add(self, file):
+        self.mods[file] = Mod(file)
+    def Remove(self, file):
+        self.mods[file].terminate()
+        self.mods[file] = None
+    def Load(self):
+        for root, _, files in os.walk("mods"):
+            for file in _:
+                # Check if the file has a .py extension (you can adjust the condition as needed)
+                if not file == "__pycache__":
+                    # Get the full path to the mod file
+                    mod_file_path = os.path.normpath(os.path.join(root, file))
+            
+                    # Run the mod file
+                    self.Add(file)

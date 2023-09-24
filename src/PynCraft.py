@@ -78,7 +78,11 @@ modloader.modVars = {
     "crosshair": crosshair
 }
 
-
+mods = modloader.ModArray()
+mods.init()
+print("Mod Loader initalized")
+mods.Load()
+print("Mods initalized")
 
 
 hotbar.add_item(cobblestone().item, 128, 0)
@@ -88,7 +92,7 @@ hotbar.add_item(cobblestonesphere().item, 128, 2)
 
 
 
-print(save_class(GenerateWorld(1), "wrld.pk1"))
+print(GenerateWorld(1))
 
 
 app.run()
