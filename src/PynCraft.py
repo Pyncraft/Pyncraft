@@ -3,7 +3,7 @@ from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from VoxelTypes import *
 from Objects import *
-from WorldGeneration import GenerateWorld, World
+from WorldGeneration import GenerateWorld, World, makeWorld
 from utils import get_current_commit_hash
 import configparser
 import json
@@ -88,6 +88,9 @@ wrld = GenerateWorld(1)
 
 
 
+print(wrld.Save())
+savefile(wrld.Save(), "dirt.wrld")
 wrld.Load(loadfile("dirt.wrld"))
+
 
 app.run()
