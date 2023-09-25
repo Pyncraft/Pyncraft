@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.color import *
 
 class Voxel(Button):
     def __init__(self, Block, position=(0,0,0), metadata={}):
@@ -12,17 +13,6 @@ class Voxel(Button):
             highlight_color=color.lime,
         )
         self.metadata = metadata
-class Block():
-    #def __init__(self, name, id, block_model):
-    #    print(f"Block {id} has been defined")
-    #    self.name = name
-    #    self.id = id
-    #    self.texture = block_model.texture
-    #    self.color = block_model.color
-    #    self.model = block_model.model
-    #    self.item = Item(name, id, block_model.texture, block_model)
-    #    self.item.isBlockItem = True
-    null = 0 # Fixes an error, a no-op
 
 class Model():
     def __init__(self, texture, color, model):
@@ -138,4 +128,29 @@ class Hotbar(Entity):
             self.slots[slot_index].texture = item.invtext
         self.slots[slot_index].texture = item.invtext  # Update the texture
         self.count[slot_index] = count
+
+class VoltTierArray:
+    ULV = 4
+    LV = 16
+    MV = 64
+    HV = 256
+    EV = 1024
+    IV = 4096
+    LUV = 16384
+    UV = 65536
+    UHV = 262144
+    UEV = 1048576
+    UIV = 4194304
+    UUV = 16777216
     
+class Block():
+    #def __init__(self, name, id, block_model):
+    #    print(f"Block {id} has been defined")
+    name = "cool block 10000"
+    id = "internal:epic"
+    texture = "cooltexture"
+    color = color.white
+    model = "cube"
+    item = Item(name, id, texture, None)
+    item.isBlockItem = True
+

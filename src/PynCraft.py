@@ -1,6 +1,7 @@
 from ursina import *
 from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
+from ursina.prefabs.hot_reloader import HotReloader
 from VoxelTypes import *
 from Objects import *
 from WorldGeneration import GenerateWorld, World
@@ -10,7 +11,6 @@ import json
 import modloader
 
 app = Ursina()
-
 
 
 def input(key):
@@ -35,6 +35,9 @@ def input(key):
     for i in range(10):
         if held_keys[str(i+1)]:
             hotbar.select_slot(i)
+    if key == 'f5':
+        # Prevent the default behavior of the F5 key (refresh)
+        application.pause
     print(f"Key {key} pressed")
 
 def update():
