@@ -12,9 +12,9 @@ def get_current_commit_hash():
         # Extract and return the commit hash
         commit_hash = result.stdout.strip()
         return commit_hash
-    except subprocess.CalledProcessError:
+    except Exception:
         # Handle the case where the Git command fails
-        return None
+        return "Compiled"
 
 def create_blockitem_id(namespace="internal", name=""):
     return namespace + ":" + name
