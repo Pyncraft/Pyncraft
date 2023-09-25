@@ -38,3 +38,9 @@ def restoretuple(cls, attributes):
     obj.__dict__.update(attributes)
     return obj
 
+def savefile(data, filename):
+    with open(filename, "w") as file:
+        file.write(data)
+def loadfile(filename):
+    with open(filename, "r") as file:
+        return file.read()
