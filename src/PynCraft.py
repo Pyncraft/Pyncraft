@@ -102,14 +102,15 @@ hotbar.add_item(dirt().item, 128, 1)
 hotbar.add_item(cobblestonesphere().item, 128, 2)
 
 
-wrld = GenerateWorld(1)
+wrld = makeWorld()
 
 
 
 
-print(wrld.Save())
-savefile(wrld.Save(), "dirt.wrld")
+# print(wrld.Save())
+# savefile(wrld.Save(), "dirt.wrld")
 wrld.Load(loadfile("dirt.wrld"))
+print(type(wrld.blocks['0-0-0']))
 
 
 app.run()

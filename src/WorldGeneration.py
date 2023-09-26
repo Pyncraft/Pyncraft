@@ -1,6 +1,7 @@
 from VoxelTypes import *
 from Objects import dirt
 import json
+import jsonpickle
 def GenerateWorld(Seed):
     mcworld = World()
     for z in range(30):
@@ -19,9 +20,10 @@ class World():
         save = {}
         save["blocks"] = self.blocks
         save["playerpos"] = self.playerpos
-        return json.dumps(save)
+        frozensave = jsonpickle.encode(save, keys=True, unpicklable=True)
+        return json.dumps(frozensave)
     def Load(self, data):
-        data = json.loads(data)
+        data = jsonpickle.decode(json.loads(data), keys=True)
         self.blocks = data["blocks"]
         self.playerpos = data["playerpos"]
 
