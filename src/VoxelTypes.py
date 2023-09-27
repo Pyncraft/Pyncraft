@@ -13,6 +13,14 @@ class Voxel(Button):
             highlight_color=color.lime,
         )
         self.metadata = metadata
+    voltIn = 0
+    voltOut = 0
+    ampIn = 0
+    ampOut = 0
+    maxin = 0
+    maxout = 0
+    maxStored = 0
+    storedJoules = 0
 
 class Model():
     def __init__(self, texture, color, model):
@@ -130,18 +138,16 @@ class Hotbar(Entity):
         self.count[slot_index] = count
 
 class VoltTierArray:
-    ULV = 4
-    LV = 16
-    MV = 64
-    HV = 256
-    EV = 1024
-    IV = 4096
-    LUV = 16384
-    UV = 65536
-    UHV = 262144
-    UEV = 1048576
-    UIV = 4194304
-    UUV = 16777216
+    ULV = 8
+    LV = 32
+    MV = 128
+    HV = 512
+    EV = 2048
+    IV = 8192
+    LUV = 32768
+    ZPM = 131072
+    UV = 524288
+    UHV = 2097152
     
 class Block():
     #def __init__(self, name, id, block_model):
@@ -153,4 +159,5 @@ class Block():
     model = "cube"
     item = Item(name, id, texture, None)
     item.isBlockItem = True
+
 
