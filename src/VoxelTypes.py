@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.color import *
 
 class Voxel(Button):
     def __init__(self, Block, position=(0,0,0), metadata={}):
@@ -12,17 +13,14 @@ class Voxel(Button):
             highlight_color=color.lime,
         )
         self.metadata = metadata
-class Block():
-    #def __init__(self, name, id, block_model):
-    #    print(f"Block {id} has been defined")
-    #    self.name = name
-    #    self.id = id
-    #    self.texture = block_model.texture
-    #    self.color = block_model.color
-    #    self.model = block_model.model
-    #    self.item = Item(name, id, block_model.texture, block_model)
-    #    self.item.isBlockItem = True
-    null = 0 # Fixes an error, a no-op
+    voltIn = 0
+    voltOut = 0
+    ampIn = 0
+    ampOut = 0
+    maxin = 0
+    maxout = 0
+    maxStored = 0
+    storedJoules = 0
 
 class Model():
     def __init__(self, texture, color, model):
@@ -138,7 +136,20 @@ class Hotbar(Entity):
             self.slots[slot_index].texture = item.invtext
         self.slots[slot_index].texture = item.invtext  # Update the texture
         self.count[slot_index] = count
+
+class VoltTierArray:
+    ULV = 8
+    LV = 32
+    MV = 128
+    HV = 512
+    EV = 2048
+    IV = 8192
+    LUV = 32768
+    ZPM = 131072
+    UV = 524288
+    UHV = 2097152
     
+
 class ItemRegistry():
     items = {}
     def RegisterItem(self, item: Item):
@@ -148,3 +159,17 @@ class BlockRegistry():
     def RegisterBlock(self, block: Block):
         self.blocks[block.id] = block
     
+
+class Block():
+    #def __init__(self, name, id, block_model):
+    #    print(f"Block {id} has been defined")
+    name = "cool block 10000"
+    id = "internal:epic"
+    texture = "cooltexture"
+    color = color.white
+    model = "cube"
+    item = Item(name, id, texture, None)
+    item.isBlockItem = True
+
+
+
