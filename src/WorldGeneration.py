@@ -20,10 +20,15 @@ class World():
         save = {}
         save["blocks"] = self.blocks
         save["playerpos"] = self.playerpos
-        frozensave = jsonpickle.encode(save, keys=True, unpicklable=True)
-        return json.dumps(frozensave)
+        for i in save["blocks"]:
+            save["blocks"][i] = save["blocks"][i].export()
+            save["blocks"][i][0] = save["blocks"][i][0].export()
+        return json.dumps(save)
     def Load(self, data):
-        data = jsonpickle.decode(json.loads(data), keys=True)
+        data = json.loads(data)
+        for i in data["blocks"]:
+            data["blocks"][0] = jsonpickle.decode(data["blocks"][0], keys=True)
+            data["blocks"][i] = Voxel(data["blocks"][i])
         self.blocks = data["blocks"]
         self.playerpos = data["playerpos"]
 

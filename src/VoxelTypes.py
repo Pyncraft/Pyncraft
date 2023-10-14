@@ -1,4 +1,5 @@
 from ursina import *
+import jsonpickle
 
 class Voxel(Button):
     def __init__(self, Block, position=(0,0,0), metadata={}):
@@ -12,6 +13,9 @@ class Voxel(Button):
             highlight_color=color.lime,
         )
         self.metadata = metadata
+        self.block = Block
+    def export(self):
+        return [self.block, self.position, self.metadata]
 class Block():
     #def __init__(self, name, id, block_model):
     #    print(f"Block {id} has been defined")
@@ -23,6 +27,8 @@ class Block():
     #    self.item = Item(name, id, block_model.texture, block_model)
     #    self.item.isBlockItem = True
     null = 0 # Fixes an error, a no-op
+    def export(self):
+        return jsonpickle.encode(self, keys=True)
 
 class Model():
     def __init__(self, texture, color, model):
