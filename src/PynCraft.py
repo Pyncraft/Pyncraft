@@ -90,6 +90,7 @@ modloader.modVars = {
     "crosshair": crosshair
 }
 
+    
 mods = modloader.ModArray()
 mods.init()
 print("Mod Loader initalized")
@@ -102,10 +103,11 @@ hotbar.add_item(dirt().item, 128, 1)
 hotbar.add_item(cobblestonesphere().item, 128, 2)
 
 
-wrld = GenerateWorld(1)
+wrld = World()
+# savefile(wrld.Save(), "dirt.wrld")
 
 
-
+wrld.blocks = {}
 
 wrld.Load(loadfile("dirt.wrld"))
 
