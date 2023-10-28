@@ -15,6 +15,6 @@ def recursive_copy(src, dest):
             new_dest = os.path.join(dest, item)
             os.mkdir(new_dest)
             recursive_copy(file_path, new_dest)
-command = f"python -m nuitka --follow-imports src/pyncraft.py --include-package=ursina --standalone"
+command = "python -m nuitka --follow-imports src/pyncraft.py --include-package=ursina --standalone"
 subprocess.call(command)
 recursive_copy("assets", "pyncraft.dist")
