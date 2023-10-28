@@ -107,6 +107,6 @@ wrld = GenerateWorld(1)
 
 
 
-wrld.Load(loadfile("dirt.wrld"))
+
 
 app.run()
