@@ -103,11 +103,11 @@ hotbar.add_item(dirt().item, 128, 1)
 hotbar.add_item(cobblestonesphere().item, 128, 2)
 
 
-wrld = World()
+wrld = GenerateWorld(1)
 # savefile(wrld.Save(), "dirt.wrld")
 
 
-wrld.blocks = {}
+# wrld.blocks = {}
 
 
 
