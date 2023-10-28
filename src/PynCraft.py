@@ -109,6 +109,6 @@ wrld = World()
 
 wrld.blocks = {}
 
-wrld.Load(loadfile("dirt.wrld"))
+
 
 app.run()
