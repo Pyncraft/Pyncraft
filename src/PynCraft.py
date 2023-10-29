@@ -1,3 +1,4 @@
+import ctypes, os
 from ursina import *
 from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
@@ -24,7 +25,8 @@ def input(key):
     if key == 'left mouse down' and mouse.hovered_entity:
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
         if hit_info.hit:
-            destroy(mouse.hovered_entity)
+            if mouse.hovered_entity.__class__ == Voxel:
+                destroy(mouse.hovered_entity)
     if key == "escape" and pause_menu.enabled:
         pause_menu.close_menu()
         mouse.locked = True
@@ -48,9 +50,17 @@ config.read('conf.ini')
 
 player = FirstPersonController()
 
+if os.name == "nt": # Change the icon on windows, how do I do it for linux?
 
-window.title = 'PynCraft' 
+    myappid = u'mycompany.myproduct.subproduct.version' # arbitrary string
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
+
+
 window.show_ursina_splash = False
+window.borderless = False
+window.title = 'PynCraft' 
+window.icon = "icons/logo64.ico"
 player.cursor = False
 
 print(vars(config))

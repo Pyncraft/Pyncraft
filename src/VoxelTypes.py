@@ -12,6 +12,7 @@ class Voxel(Button):
             highlight_color=color.lime,
         )
         self.metadata = metadata
+        self.block = True
 class Block():
     #def __init__(self, name, id, block_model):
     #    print(f"Block {id} has been defined")
