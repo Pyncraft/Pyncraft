@@ -3,7 +3,6 @@ import subprocess
 import dill as pickle
 import json
 import VoxelTypes
-import gc
 
 def get_current_commit_hash():
     try:
@@ -15,11 +14,7 @@ def get_current_commit_hash():
         return commit_hash
     except Exception:
         # Handle the case where the Git command fails
-<<<<<<< HEAD
         return "Compiled"
-=======
-        return ""
->>>>>>> world_generation
 
 def create_blockitem_id(namespace="internal", name=""):
     return namespace + ":" + name
@@ -32,9 +27,8 @@ def load_class(file_path):
     with open(file_path, "rb") as file:
         return restoretuple(pickle.load(file))
 
-def add_block(block: VoxelTypes.Block, position: tuple, world):
-    world.blocks[f"{position[0]}-{position[1]}-{position[2]}"] = VoxelTypes.Voxel(Block=block, position=position)
-    return world.blocks[f"{position[0]}-{position[1]}-{position[2]}"]
+def add_block(block, position, world):
+    return VoxelTypes.Voxel(Block=block, position=position)
 
 def savetuple(obj):
     return (obj.__class__, obj.__dict__)
@@ -50,9 +44,3 @@ def savefile(data, filename):
 def loadfile(filename):
     with open(filename, "r") as file:
         return file.read()
-
-def getallinstances(classe):
-    instances = []
-    for ob in gc.get_objects():
-        if isinstance(ob, classe):
-            instances.append(ob)

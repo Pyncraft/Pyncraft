@@ -1,10 +1,6 @@
 class assetman():
     nul = 0
-<<<<<<< HEAD
 assets = assetman
-=======
-assets = assetman()
->>>>>>> world_generation
 def mod_pointinit(func):
     global assets
     assets.hotbar = func["hotbar"]

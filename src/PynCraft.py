@@ -4,8 +4,8 @@ from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from VoxelTypes import *
 from Objects import *
-from WorldGeneration import GenerateWorld, World, makeWorld
-from utils import get_current_commit_hash, add_block
+from WorldGeneration import GenerateWorld, World
+from utils import get_current_commit_hash
 import configparser
 import json
 import modloader
@@ -19,7 +19,7 @@ def input(key):
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
         if hit_info.hit:
             try:
-                add_block(hotbar.items[hotbar.selected_slot].block, hit_info.entity.position + hit_info.normal, wrld)
+                Voxel(Block=hotbar.items[hotbar.selected_slot].block, position=hit_info.entity.position + hit_info.normal)
             except AttributeError:
                 print("Placed nil block")
     if key == 'left mouse down' and mouse.hovered_entity:
@@ -43,7 +43,6 @@ def update():
     if player.y < -255:
         player.y = 255
 ver = "0.1"
-
 
 
 config = configparser.ConfigParser()
@@ -101,6 +100,7 @@ modloader.modVars = {
     "crosshair": crosshair
 }
 
+    
 mods = modloader.ModArray()
 mods.init()
 print("Mod Loader initalized")
@@ -119,12 +119,6 @@ wrld = GenerateWorld(1)
 
 # wrld.blocks = {}
 
-
-
-print(wrld.Save())
-#savefile(wrld.Save(), "dirt.wrld")
-#wrld.Load(loadfile("dirt.wrld"))
-#print(type(wrld.blocks['0-0-0']))
 
 
 app.run()
