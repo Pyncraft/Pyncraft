@@ -15,11 +15,7 @@ def get_current_commit_hash():
         return commit_hash
     except Exception:
         # Handle the case where the Git command fails
-<<<<<<< HEAD
-        return "Compiled"
-=======
         return ""
->>>>>>> world_generation
 
 def create_blockitem_id(namespace="internal", name=""):
     return namespace + ":" + name
