@@ -1,18 +1,29 @@
 from ursina import *
+from ursina.color import *
+class xyzarray:
+    array = {}
+    def __getitem__(self,xyz):
+        x,y,z = xyz
+        return self.array[f"{x}-{y}-{z}"]
+    def __setitem__(self,xyz, value):
+        x,y,z = xyz
+        self.array[f"{x}-{y}-{z}"] = value
+
 
 class Voxel(Button):
-    def __init__(self, Block, position=(0,0,0), metadata={}):
+    def __init__(self, Block="a", position=(0,0,0), metadata={}):
         print(f"A Voxel of block {Block.name} has been added with model {Block.model}")
         super().__init__(parent=scene,
             position=position,
             model=Block.model,
             origin_y=.5,
             texture=Block.texture,
-            color=color.color(0, 0, 1),
-            highlight_color=color.lime,
+            color=color(0, 0, 1),
+            highlight_color=lime,
         )
         self.metadata = metadata
-        self.block = True
+        self.block = Block
+        self.id = Block.id
 class Block():
     #def __init__(self, name, id, block_model):
     #    print(f"Block {id} has been defined")
@@ -24,6 +35,13 @@ class Block():
     #    self.item = Item(name, id, block_model.texture, block_model)
     #    self.item.isBlockItem = True
     null = 0 # Fixes an error, a no-op
+    name = "koolblock"
+    id = "test:test"
+    texture = "troll"
+    color = white10
+    model = "troll"
+    item = "ahhh"
+
 
 class Model():
     def __init__(self, texture, color, model):
@@ -31,6 +49,9 @@ class Model():
         self.texture = texture
         self.color = color
         self.model = model
+    texture = "test"
+    color = white10
+    model = "test"
 
 class Crosshair(Entity):
     def __init__(self):
@@ -40,7 +61,7 @@ class Crosshair(Entity):
             texture='crosshair', 
             scale=0.05,
             rotation=Vec3(0, 0, 0),
-            color=color.white,
+            color=white,
             parent=camera.ui
         )
         self.enabled = True
@@ -54,7 +75,7 @@ class PauseMenu(Entity):
             enabled=False,
             model='quad',
             texture='white_cube',
-            color=color.color(0, 0, 0, 0.8),
+            color=color(0, 0, 0, 0.8),
             scale=(1, 2),
             position=(0, 0, -1)
         )
@@ -110,7 +131,7 @@ class Hotbar(Entity):
                 parent=self,
                 model='quad',
                 texture=self.items[i].invtext,
-                color=color.color(1, 1, 1),
+                color=color(1, 1, 1),
                 position=(0.8 * i, 0),
                 scale=0.8,  # Adjust the scale as needed for your textures
                 on_click=Func(self.select_slot, i)
@@ -127,9 +148,9 @@ class Hotbar(Entity):
     def highlight_selected_slot(self):
         for i, slot in enumerate(self.slots):
             if i == self.selected_slot:
-                slot.color = color.white  # Highlighted color
+                slot.color = white  # Highlighted color
             else:
-                slot.color = color.gray  # Default color
+                slot.color = gray  # Default color
 
     def add_item(self, item, count, slot_index):
         self.items[slot_index] = item

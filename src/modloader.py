@@ -37,7 +37,11 @@ class ModArray():
     def Load(self):
         for root, _, files in os.walk("mods"):
             for file in _:
+<<<<<<< HEAD
                 # Check if the file has a .py extension (you can adjust the condition as needed)
+=======
+                # If the file is a .pyc file, IGNORE IT!
+>>>>>>> world_generation
                 if not file == "__pycache__":
                     # Get the full path to the mod file
                     mod_file_path = os.path.normpath(os.path.join(root, file))
