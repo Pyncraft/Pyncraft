@@ -161,3 +161,12 @@ class Hotbar(Entity):
         self.slots[slot_index].texture = item.invtext  # Update the texture
         self.count[slot_index] = count
     
+class ItemRegistry():
+    items = {}
+    def RegisterItem(self, item: Item):
+        self.items[item.id] = item
+class BlockRegistry():
+    blocks = {}
+    def RegisterBlock(self, block: Block):
+        self.blocks[block.id] = block
+    
