@@ -108,7 +108,7 @@ wrld = GenerateWorld(1)
 
 
 
-# print(wrld.Save())
+print(wrld.Save())
 #savefile(wrld.Save(), "dirt.wrld")
 #wrld.Load(loadfile("dirt.wrld"))
 #print(type(wrld.blocks['0-0-0']))

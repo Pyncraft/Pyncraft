@@ -1,5 +1,7 @@
 */*__pycache__
 */*.build
+pyncraft.build
+pyncraft.dist
 pyncraft.cmd
 pyncraft.exe
 keys.txt

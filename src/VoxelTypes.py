@@ -1,5 +1,13 @@
 from ursina import *
 from ursina.color import *
+class xyzarray:
+    array = {}
+    def __getitem__(self,xyz):
+        x,y,z = xyz
+        return self.array[f"{x}-{y}-{z}"]
+    def __setitem__(self,xyz, value):
+        x,y,z = xyz
+        self.array[f"{x}-{y}-{z}"] = value
 
 
 class Voxel(Button):
@@ -15,6 +23,7 @@ class Voxel(Button):
         )
         self.metadata = metadata
         self.block = Block
+        self.id = Block.id
 class Block():
     #def __init__(self, name, id, block_model):
     #    print(f"Block {id} has been defined")
