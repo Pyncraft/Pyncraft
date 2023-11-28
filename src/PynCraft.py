@@ -5,6 +5,7 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from VoxelTypes import *
 from Objects import *
 from WorldGeneration import GenerateWorld, World, makeWorld
+import utils
 from utils import get_current_commit_hash, add_block
 import configparser
 import json
@@ -19,25 +20,25 @@ def input(key):
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
         if hit_info.hit:
             try:
-                add_block(hotbar.items[hotbar.selected_slot].block, hit_info.entity.position + hit_info.normal, wrld)
+                add_block(hotbar.items[hotbar.selected_slot].block, hit_info.entity.position + hit_info.normal, wrld) #Add block
             except AttributeError:
-                print("Placed nil block")
+                pass #Clearly empty hotbar slot
     if key == 'left mouse down' and mouse.hovered_entity:
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
         if hit_info.hit:
-            if mouse.hovered_entity.__class__ == Voxel:
+            if mouse.hovered_entity.__class__ == Voxel: #Destroy the block 
                 destroy(mouse.hovered_entity)
     if key == "escape" and pause_menu.enabled:
         pause_menu.close_menu()
         mouse.locked = True
     elif key == "escape":
-        pause_menu.enabled = True
-        mouse.locked = False
-        player.enabled = False
+        pause_menu.enabled = True #Show the pause menu
+        mouse.locked = False #Unlock the mouse
+        player.enabled = False #Disables player camera movement? What does this do? (Does nothing, remove this later)
     for i in range(10):
         if held_keys[str(i+1)]:
             hotbar.select_slot(i)
-    print(f"Key {key} pressed")
+    #print(f"Key {key} pressed")
 
 def update():
     if player.y < -255:
@@ -101,6 +102,8 @@ modloader.modVars = {
     "crosshair": crosshair
 }
 
+registerInternals() #Register the blocks (dirt, cobblestone, etc)
+
 mods = modloader.ModArray()
 mods.init()
 print("Mod Loader initalized")
@@ -113,7 +116,7 @@ hotbar.add_item(dirt().item, 128, 1)
 hotbar.add_item(cobblestonesphere().item, 128, 2)
 
 
-wrld = GenerateWorld(1)
+wrld = World()
 # savefile(wrld.Save(), "dirt.wrld")
 
 
@@ -121,9 +124,9 @@ wrld = GenerateWorld(1)
 
 
 
-print(wrld.Save())
+#wrld.Save("dirt.wrld")
 #savefile(wrld.Save(), "dirt.wrld")
-#wrld.Load(loadfile("dirt.wrld"))
+wrld.Load("dirt.wrld")
 #print(type(wrld.blocks['0-0-0']))
 
 

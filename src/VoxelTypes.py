@@ -34,13 +34,7 @@ class Block():
     #    self.model = block_model.model
     #    self.item = Item(name, id, block_model.texture, block_model)
     #    self.item.isBlockItem = True
-    null = 0 # Fixes an error, a no-op
-    name = "koolblock"
-    id = "test:test"
-    texture = "troll"
-    color = white10
-    model = "troll"
-    item = "ahhh"
+    pass
 
 
 class Model():
@@ -168,5 +162,7 @@ class ItemRegistry():
 class BlockRegistry():
     blocks = {}
     def RegisterBlock(self, block: Block):
-        self.blocks[block.id] = block
+        print(f"Block {block().id} registered")
+        self.blocks[block().id] = block
+        
     

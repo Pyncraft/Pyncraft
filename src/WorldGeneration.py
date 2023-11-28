@@ -2,6 +2,8 @@ from typing import Any
 from VoxelTypes import *
 from Objects import dirt
 import json
+from utils import add_block
+from registry import DefaultBlockRegistry as breg
 def GenerateWorld(Seed):
     mcworld = World()
     for z in range(30):
@@ -16,16 +18,23 @@ class World():
     hotbar = None
     hotbarcount = None
     version = 1
-    def Save(self):
+    def Save(self, filename):
         save = {}
         blocks = {}
         for i in self.blocks:
             blocks[i] = self.blocks[i].id
-        return blocks
+        save["blocks"] = blocks
+        with open(filename, "w+") as f:
+            json.dump(save, f)
 
-    def Load(self, data):
-        data = json.loads(data)
-        self.blocks = data["blocks"]
-        self.playerpos = data["playerpos"]
-
-
+    def Load(self, filename):
+        print(f"Loading world {filename}")
+        with open(filename, "r+") as f:
+            save = json.load(f)
+        blocks = save["blocks"]
+        print(breg.blocks)
+        for i in blocks:
+            block = breg.blocks[blocks[i]]()
+            location = i.split("-")
+            self.blocks[i] = add_block(block, tuple(location), self)
+            print(f"Save voxel {tuple(location)} made.")
