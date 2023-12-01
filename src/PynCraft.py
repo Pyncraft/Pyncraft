@@ -5,10 +5,8 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from VoxelTypes import *
 from Objects import *
 from WorldGeneration import GenerateWorld, World, makeWorld
-import utils
 from utils import get_current_commit_hash, add_block
 import configparser
-import json
 import modloader
 
 app = Ursina()
@@ -88,6 +86,8 @@ pause_menu = PauseMenu(player)
 hotbar = Hotbar(num_slots=10)
 version_text = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
 
+wrld = None
+
 modloader.modVars = {
     "pausemenu": pause_menu,
     "hotbar": hotbar,
@@ -98,7 +98,8 @@ modloader.modVars = {
     "window": window,
     "app": app,
     "ver": ver,
-    "crosshair": crosshair
+    "crosshair": crosshair,
+    "wrld": wrld
 }
 
 registerInternals() #Register the blocks (dirt, cobblestone, etc)
@@ -126,7 +127,5 @@ wrld = World()
 #wrld.Save("dirt.wrld")
 #savefile(wrld.Save(), "dirt.wrld")
 wrld.Load("dirt.wrld")
-print(wrld.blocks['0-0-0'].position)
-
 
 app.run()

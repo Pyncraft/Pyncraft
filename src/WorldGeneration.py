@@ -36,3 +36,6 @@ class World():
             block = breg.blocks[blocks[i]]()
             location = i.split("-")
             self.blocks[i] = add_block(block, tuple(map(int,location)), self)
+    def Unload(self):
+        for i in self.blocks:
+            destroy(self.blocks[i])
