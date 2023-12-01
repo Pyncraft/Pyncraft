@@ -32,9 +32,7 @@ class World():
         with open(filename, "r+") as f:
             save = json.load(f)
         blocks = save["blocks"]
-        print(breg.blocks)
         for i in blocks:
             block = breg.blocks[blocks[i]]()
             location = i.split("-")
-            self.blocks[i] = add_block(block, tuple(location), self)
-            print(f"Save voxel {tuple(location)} made.")
+            self.blocks[i] = add_block(block, tuple(map(int,location)), self)

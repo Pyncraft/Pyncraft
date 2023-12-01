@@ -33,8 +33,7 @@ def input(key):
         mouse.locked = True
     elif key == "escape":
         pause_menu.enabled = True #Show the pause menu
-        mouse.locked = False #Unlock the mouse
-        player.enabled = False #Disables player camera movement? What does this do? (Does nothing, remove this later)
+        player.enabled = False
     for i in range(10):
         if held_keys[str(i+1)]:
             hotbar.select_slot(i)
@@ -127,7 +126,7 @@ wrld = World()
 #wrld.Save("dirt.wrld")
 #savefile(wrld.Save(), "dirt.wrld")
 wrld.Load("dirt.wrld")
-#print(type(wrld.blocks['0-0-0']))
+print(wrld.blocks['0-0-0'].position)
 
 
 app.run()
