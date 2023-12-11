@@ -8,7 +8,7 @@ def GenerateWorld(Seed):
     mcworld = World()
     for z in range(30):
         for x in range(30):
-            mcworld.blocks[f"{x}-0-{z}"] = Voxel(Block=dirt(), position=(x,0,z))
+            mcworld.blocks[f"{x}=0.0={z}"] = Voxel(Block=dirt(), position=(x,0,z))
     return mcworld
 def makeWorld():
     return World()
@@ -34,8 +34,8 @@ class World():
         blocks = save["blocks"]
         for i in blocks:
             block = breg.blocks[blocks[i]]()
-            location = i.split("-")
-            self.blocks[i] = add_block(block, tuple(map(int,location)), self)
+            location = i.split("=")
+            self.blocks[i] = add_block(block, tuple(map(float,location)), self)
     def Unload(self):
         for i in self.blocks:
             destroy(self.blocks[i])
