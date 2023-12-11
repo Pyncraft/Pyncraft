@@ -9,6 +9,8 @@ from utils import get_current_commit_hash, add_block
 import configparser
 import modloader
 import tkinter as tk
+import json
+
 
 
 app = Ursina()
@@ -132,6 +134,7 @@ modloader.modVars = {
 
 registerInternals() #Register the blocks (dirt, cobblestone, etc)
 
+
 mods = modloader.ModArray()
 mods.init()
 print("Mod Loader initalized")
@@ -144,16 +147,15 @@ hotbar.add_item(dirt().item, 128, 1)
 hotbar.add_item(cobblestonesphere().item, 128, 2)
 
 
-wrld = World()
+
+wrld = GenerateWorld(1)
 # savefile(wrld.Save(), "dirt.wrld")
-
-
 # wrld.blocks = {}
 
 
 
 #wrld.Save("dirt.wrld")
 #savefile(wrld.Save(), "dirt.wrld")
-wrld.Load("dirt.wrld")
+#wrld.Load("dirt.wrld")
 
 app.run()

@@ -17,6 +17,7 @@ def get_current_commit_hash():
         # Handle the case where the Git command fails
         return ""
 
+
 def create_blockitem_id(namespace="internal", name=""):
     return namespace + ":" + name
 

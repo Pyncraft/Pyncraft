@@ -24,6 +24,7 @@ class Voxel(Button):
         self.metadata = metadata
         self.block = Block
         self.id = Block.id
+        self.block = True
 class Block():
     #def __init__(self, name, id, block_model):
     #    print(f"Block {id} has been defined")
@@ -181,5 +182,4 @@ class BlockRegistry():
     def RegisterBlock(self, block: Block):
         print(f"Block {block().id} registered")
         self.blocks[block().id] = block
-        
     
