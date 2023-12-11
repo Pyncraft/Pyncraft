@@ -4,11 +4,14 @@ from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from VoxelTypes import *
 from Objects import *
-from WorldGeneration import GenerateWorld, World
-from utils import get_current_commit_hash
+from WorldGeneration import GenerateWorld, World, makeWorld
+from utils import get_current_commit_hash, add_block
 import configparser
-import json
 import modloader
+import tkinter as tk
+import json
+
+
 
 app = Ursina()
 
@@ -19,21 +22,45 @@ def input(key):
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
         if hit_info.hit:
             try:
-                Voxel(Block=hotbar.items[hotbar.selected_slot].block, position=hit_info.entity.position + hit_info.normal)
+                add_block(hotbar.items[hotbar.selected_slot].block, hit_info.entity.position + hit_info.normal, wrld) #Add block
             except AttributeError:
-                print("Placed nil block")
+                pass #Clearly empty hotbar slot
     if key == 'left mouse down' and mouse.hovered_entity:
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
         if hit_info.hit:
-            if mouse.hovered_entity.__class__ == Voxel:
+            if mouse.hovered_entity.__class__ == Voxel: #Destroy the block 
                 destroy(mouse.hovered_entity)
     if key == "escape" and pause_menu.enabled:
         pause_menu.close_menu()
         mouse.locked = True
     elif key == "escape":
-        pause_menu.enabled = True
-        mouse.locked = False
+        pause_menu.enabled = True #Show the pause menu
         player.enabled = False
+    elif key == "right shift":
+        player.disable()
+        def saveGame():
+            wrld.Save(inputtxt.get("1.0",'end-1c'))
+        def loadGame():
+            wrld.Unload()
+            wrld.Load(inputtxt.get("1.0",'end-1c'))
+        saveframe = tk.Tk()
+        saveframe.title("Save Input") 
+        saveframe.geometry('400x200')
+        inputtxt = tk.Text(saveframe, 
+                   height = 1, 
+                   width = 20)
+        inputtxt.pack()
+        saveButton = tk.Button(saveframe, 
+                        text = "Save",  
+                        command = saveGame) 
+        saveButton.pack()
+        loadButton = tk.Button(saveframe, 
+                        text = "Load",  
+                        command = loadGame) 
+        loadButton.pack()
+        saveframe.mainloop()
+        player.enable()
+        
     for i in range(10):
         if held_keys[str(i+1)]:
             hotbar.select_slot(i)
@@ -43,6 +70,7 @@ def update():
     if player.y < -255:
         player.y = 255
 ver = "0.1"
+
 
 
 config = configparser.ConfigParser()
@@ -83,9 +111,12 @@ else:
     camera.fov = 90
     camera.clip_plane_far = 100
 
-pause_menu = PauseMenu(player)
+wrld = None
+
+pause_menu = PauseMenu(player, wrld)
 hotbar = Hotbar(num_slots=10)
 version_text = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
+
 
 modloader.modVars = {
     "pausemenu": pause_menu,
@@ -97,10 +128,13 @@ modloader.modVars = {
     "window": window,
     "app": app,
     "ver": ver,
-    "crosshair": crosshair
+    "crosshair": crosshair,
+    "wrld": wrld
 }
 
-    
+registerInternals() #Register the blocks (dirt, cobblestone, etc)
+
+
 mods = modloader.ModArray()
 mods.init()
 print("Mod Loader initalized")
@@ -113,12 +147,15 @@ hotbar.add_item(dirt().item, 128, 1)
 hotbar.add_item(cobblestonesphere().item, 128, 2)
 
 
+
 wrld = GenerateWorld(1)
 # savefile(wrld.Save(), "dirt.wrld")
-
-
 # wrld.blocks = {}
 
 
+
+#wrld.Save("dirt.wrld")
+#savefile(wrld.Save(), "dirt.wrld")
+#wrld.Load("dirt.wrld")
 
 app.run()

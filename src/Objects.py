@@ -1,7 +1,9 @@
 from utils import *
 from VoxelTypes import Block, Model, Item
-from ursina import *
+from ursina import * 
 from ursina.color import *
+from registry import DefaultBlockRegistry as registry
+
 
 dirt_model = Model('dirt', color(0,0,0), 'cube')
 cobblestone_model = Model('cobblestone1', color(0,0,0), 'cube')
@@ -34,3 +36,10 @@ class cobblestonesphere(cobblestone):
     def __init__(self):
         super().__init__()
         self.model = "sphere"
+        self.id = "internal:cobblestonesphere"
+
+
+
+def registerInternals():
+    print("Registering blocks")
+    registry.RegisterBlock(dirt); registry.RegisterBlock(cobblestone); registry.RegisterBlock(cobblestonesphere)

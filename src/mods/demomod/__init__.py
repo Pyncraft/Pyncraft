@@ -1,6 +1,8 @@
 class assetman():
     nul = 0
-assets = assetman
+
+assets = assetman()
+
 def mod_pointinit(func):
     global assets
     assets.hotbar = func["hotbar"]

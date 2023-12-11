@@ -3,6 +3,8 @@
 */*.dist
 *.build
 *.dist
+pyncraft.build
+pyncraft.dist
 pyncraft.cmd
 pyncraft.exe
 keys.txt
