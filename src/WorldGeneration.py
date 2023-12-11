@@ -15,8 +15,8 @@ def makeWorld():
 class World():
     blocks = {}
     playerpos = [0,0,0]
-    hotbar = None
-    hotbarcount = None
+    #hotbar = None
+    #hotbarcount = None
     version = 1
     def Save(self, filename):
         save = {}
