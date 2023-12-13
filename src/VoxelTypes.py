@@ -1,5 +1,6 @@
 from ursina import *
 from ursina.color import *
+from loguru import logger
 class xyzarray:
     array = {}
     def __getitem__(self,xyz):
@@ -12,7 +13,7 @@ class xyzarray:
 
 class Voxel(Button):
     def __init__(self, Block="a", position=(0,0,0), metadata={}):
-        print(f"A Voxel of block {Block.name} has been added with model {Block.model}")
+        logger.debug(f"A Voxel of block {Block.name} has been added with model {Block.model}")
         super().__init__(parent=scene,
             position=position,
             model=Block.model,
@@ -40,7 +41,7 @@ class Block():
 
 class Model():
     def __init__(self, texture, color, model):
-        print(f"Model {id} has been defined")
+        logger.debug(f"Model {id} has been defined")
         self.texture = texture
         self.color = color
         self.model = model
@@ -50,7 +51,7 @@ class Model():
 
 class Crosshair(Entity):
     def __init__(self):
-        print("Crosshair has been initalized")
+        logger.info("Crosshair has been initalized")
         super().__init__(
             model='quad',
             texture='crosshair', 
@@ -63,7 +64,7 @@ class Crosshair(Entity):
 
 class PauseMenu(Entity):
     def __init__(self, player, wrld):
-        print("Pause menu has been initalized")
+        logger.info("Pause menu has been initalized")
         self.player = player
         super().__init__(
             parent=camera.ui,
@@ -117,14 +118,14 @@ class PauseMenu(Entity):
     
 
 class Item():
-    def __init__(self, name, id, invtext, model):
+    def __init__(self, name, id, invtext, model, description=""):
         self.name = name
         self.id = id
         self.invtext = invtext
         self.model = model
         self.isBlockItem = False
-        self.whenClicked = print(f"Item {self.name} has been interacted with")
-        print(f"Item {id} has been defined")
+        self.whenClicked = lambda: logger.debug(f"Item {self.name} has been interacted with")
+        logger.debug(f"Item {id} has been defined")
 
 
 

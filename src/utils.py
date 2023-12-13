@@ -5,6 +5,8 @@ import json
 import VoxelTypes
 import gc
 
+
+
 def get_current_commit_hash():
     try:
         # Run the 'git rev-parse HEAD' command
