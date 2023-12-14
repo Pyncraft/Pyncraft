@@ -10,13 +10,14 @@ import configparser
 import modloader
 import tkinter as tk
 import json
+from loguru import logger
 
 
 
 app = Ursina()
 
 
-
+@logger.catch
 def input(key):
     if key == 'right mouse down':
         hit_info = raycast(camera.world_position, camera.forward, distance=5)
@@ -64,8 +65,9 @@ def input(key):
     for i in range(10):
         if held_keys[str(i+1)]:
             hotbar.select_slot(i)
-    print(f"Key {key} pressed")
+    logger.debug(f"Key {key} pressed")
 
+@logger.catch
 def update():
     if player.y < -255:
         player.y = 255
@@ -91,7 +93,6 @@ window.title = 'PynCraft'
 window.icon = "icons/logo64.ico"
 player.cursor = False
 
-print(vars(config))
 try:
     if config['Camera']['Orthographic'] == "True":
         print("Crosshair disabled")
@@ -137,9 +138,9 @@ registerInternals() #Register the blocks (dirt, cobblestone, etc)
 
 mods = modloader.ModArray()
 mods.init()
-print("Mod Loader initalized")
+logger.info("Mod Loader initalized")
 mods.Load()
-print("Mods initalized")
+logger.info("Mods initalized")
 
 
 hotbar.add_item(cobblestone().item, 128, 0)
