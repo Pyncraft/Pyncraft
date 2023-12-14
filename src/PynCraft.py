@@ -37,8 +37,8 @@ def input(key):
         pause_menu.enabled = True #Show the pause menu
         player.enabled = False
     elif key == "right shift":
-        player.disable()
-        def saveGame():
+        player.disable() 
+        def saveGame(): #Save and load helper funcs
             wrld.Save(inputtxt.get("1.0",'end-1c'))
         def loadGame():
             wrld.Unload()
