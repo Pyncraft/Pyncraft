@@ -13,7 +13,7 @@ class xyzarray:
 
 class Voxel(Button):
     def __init__(self, Block="a", position=(0,0,0), metadata={}):
-        logger.debug(f"A Voxel of block {Block.name} has been added with model {Block.model}")
+        #logger.debug(f"A Voxel of block {Block.name} has been added with model {Block.model}")
         super().__init__(parent=scene,
             position=position,
             model=Block.model,
@@ -36,8 +36,11 @@ class Block():
     #    self.model = block_model.model
     #    self.item = Item(name, id, block_model.texture, block_model)
     #    self.item.isBlockItem = True
-    pass
-
+    
+    def __init_subclass__(self):
+        logger.debug(f"Block {id} has been defined")
+    
+    
 
 class Model():
     def __init__(self, texture, color, model):
@@ -181,6 +184,28 @@ class ItemRegistry():
 class BlockRegistry():
     blocks = {}
     def RegisterBlock(self, block: Block):
-        print(f"Block {block().id} registered")
+        logger.debug(f"Block {block().id} registered")
         self.blocks[block().id] = block
-    
+class blockEnergyManager:
+    def __init__(self, camps=0, cvolts=0, maxstored=0, stored=0, samps=0):
+        self.camps = camps
+        self.cvolts = cvolts
+        self.maxstored = maxstored
+        self.stored = stored
+        self.samps = samps
+    def withdraw(self, volts):
+        self.stored -= volts
+        return (volts, self.samps)
+    def deposit(self, volts, amps):
+        if volts > self.cvolts:
+            return
+        if amps > self.camps:
+            return
+        if amps != self.samps:
+            return
+        watts = volts
+        if watts > self.maxstored:
+            self.stored = self.maxstored
+        else:
+            self.stored += watts
+        
