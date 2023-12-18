@@ -128,7 +128,8 @@ class Item():
         self.model = model
         self.isBlockItem = False
         self.whenClicked = lambda: logger.debug(f"Item {self.name} has been interacted with")
-        logger.debug(f"Item {id} has been defined")
+    def __init_subclass__(self):
+        logger.debug(f"Item {self.id} has been defined")
 
 
 
