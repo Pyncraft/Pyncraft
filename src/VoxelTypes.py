@@ -187,26 +187,4 @@ class BlockRegistry():
     def RegisterBlock(self, block: Block):
         logger.debug(f"Block {block().id} registered")
         self.blocks[block().id] = block
-class blockEnergyManager:
-    def __init__(self, camps=0, cvolts=0, maxstored=0, stored=0, samps=0):
-        self.camps = camps
-        self.cvolts = cvolts
-        self.maxstored = maxstored
-        self.stored = stored
-        self.samps = samps
-    def withdraw(self, volts):
-        self.stored -= volts
-        return (volts, self.samps)
-    def deposit(self, volts, amps):
-        if volts > self.cvolts:
-            return
-        if amps > self.camps:
-            return
-        if amps != self.samps:
-            return
-        watts = volts
-        if watts > self.maxstored:
-            self.stored = self.maxstored
-        else:
-            self.stored += watts
         
