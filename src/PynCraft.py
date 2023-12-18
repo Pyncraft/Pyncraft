@@ -65,7 +65,7 @@ def input(key):
     for i in range(10):
         if held_keys[str(i+1)]:
             hotbar.select_slot(i)
-    logger.debug(f"Key {key} pressed")
+    #logger.debug(f"Key {key} pressed")
 
 @logger.catch
 def update():
@@ -95,7 +95,7 @@ player.cursor = False
 
 try:
     if config['Camera']['Orthographic'] == "True":
-        print("Crosshair disabled")
+        loguru.info("Crosshair disabled")
     else:
         crosshair = Crosshair()
 except Exception:

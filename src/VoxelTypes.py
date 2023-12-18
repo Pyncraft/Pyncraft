@@ -13,7 +13,7 @@ class xyzarray:
 
 class Voxel(Button):
     def __init__(self, Block="a", position=(0,0,0), metadata={}):
-        logger.debug(f"A Voxel of block {Block.name} has been added with model {Block.model}")
+        #logger.debug(f"A Voxel of block {Block.name} has been added with model {Block.model}")
         super().__init__(parent=scene,
             position=position,
             model=Block.model,
@@ -125,7 +125,8 @@ class Item():
         self.model = model
         self.isBlockItem = False
         self.whenClicked = lambda: logger.debug(f"Item {self.name} has been interacted with")
-        logger.debug(f"Item {id} has been defined")
+    def __init_subclass__(self):
+        logger.debug(f"Item {self.id} has been defined")
 
 
 
@@ -181,6 +182,6 @@ class ItemRegistry():
 class BlockRegistry():
     blocks = {}
     def RegisterBlock(self, block: Block):
-        print(f"Block {block().id} registered")
+        logger.info(f"Block {block().id} registered")
         self.blocks[block().id] = block
     
