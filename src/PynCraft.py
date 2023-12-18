@@ -10,7 +10,9 @@ import configparser
 import modloader
 import tkinter as tk
 import json
+
 from loguru import logger
+
 
 
 
@@ -38,8 +40,8 @@ def input(key):
         pause_menu.enabled = True #Show the pause menu
         player.enabled = False
     elif key == "right shift":
-        player.disable() 
-        def saveGame(): #Save and load helper funcs
+        player.disable()
+        def saveGame():
             wrld.Save(inputtxt.get("1.0",'end-1c'))
         def loadGame():
             wrld.Unload()
@@ -72,6 +74,7 @@ def update():
     if player.y < -255:
         player.y = 255
 ver = "0.2-alpha.2"
+
 
 
 

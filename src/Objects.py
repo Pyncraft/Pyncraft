@@ -6,6 +6,7 @@ from registry import DefaultBlockRegistry as registry
 from loguru import logger
 
 
+
 dirt_model = Model('dirt', color(0,0,0), 'cube')
 cobblestone_model = Model('cobblestone1', color(0,0,0), 'cube')
 

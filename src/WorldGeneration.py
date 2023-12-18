@@ -15,13 +15,13 @@ def GenerateWorld(Seed: int):
     return mcworld
 def makeWorld():
     return World()
-
 class World():
     blocks = {}
     playerpos = [0,0,0]
     #hotbar = None
     #hotbarcount = None
     version = 1
+
     @logger.catch
     def Save(self, filename: str):
         logger.info(f"Saving world {filename}")
@@ -40,6 +40,7 @@ class World():
         blocks = save["blocks"]
         for i in blocks:
             block = breg.blocks[blocks[i]]()
+
             location = i.split("=")
             self.blocks[i] = add_block(block, tuple(map(float,location)), self)
     def Unload(self):

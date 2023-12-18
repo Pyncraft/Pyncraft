@@ -6,7 +6,6 @@ import VoxelTypes
 import gc
 
 
-
 def get_current_commit_hash():
     try:
         # Run the 'git rev-parse HEAD' command
@@ -32,6 +31,7 @@ def load_class(file_path):
         return restoretuple(pickle.load(file))
 
 def add_block(block: VoxelTypes.Block, position: tuple, world):
+
     world.blocks[f"{position[0]}={position[1]}={position[2]}"] = VoxelTypes.Voxel(Block=block, position=position)
     return world.blocks[f"{position[0]}={position[1]}={position[2]}"]
 

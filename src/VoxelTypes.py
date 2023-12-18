@@ -1,5 +1,6 @@
 from ursina import *
 from ursina.color import *
+
 from loguru import logger
 class xyzarray:
     array = {}
@@ -36,11 +37,8 @@ class Block():
     #    self.model = block_model.model
     #    self.item = Item(name, id, block_model.texture, block_model)
     #    self.item.isBlockItem = True
-    
     def __init_subclass__(self):
         logger.debug(f"Block {id} has been defined")
-    
-    
 
 class Model():
     def __init__(self, texture, color, model):
@@ -185,6 +183,7 @@ class ItemRegistry():
 class BlockRegistry():
     blocks = {}
     def RegisterBlock(self, block: Block):
+
         logger.debug(f"Block {block().id} registered")
         self.blocks[block().id] = block
 class blockEnergyManager:
