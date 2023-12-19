@@ -55,3 +55,4 @@ def getallinstances(classe):
     for ob in gc.get_objects():
         if isinstance(ob, classe):
             instances.append(ob)
+

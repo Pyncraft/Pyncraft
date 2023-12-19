@@ -95,7 +95,7 @@ player.cursor = False
 
 try:
     if config['Camera']['Orthographic'] == "True":
-        loguru.info("Crosshair disabled")
+        logger.info("Crosshair disabled")
     else:
         crosshair = Crosshair()
 except Exception:

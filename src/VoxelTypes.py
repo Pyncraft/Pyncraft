@@ -194,6 +194,7 @@ class blockEnergyManager:
         self.maxstored = maxstored
         self.stored = stored
         self.samps = samps
+        self.tier = property(fget=self.getTier)
     def withdraw(self, volts):
         self.stored -= volts
         return (volts, self.samps)
@@ -209,4 +210,26 @@ class blockEnergyManager:
             self.stored = self.maxstored
         else:
             self.stored += watts
+    def getTier(self):
+        rounded = min(filter(lambda x: x >= self.cvolts, voltiers.keys()))
+        return voltiers[rounded] # I don't even with this code
+voltiers = {
+         0: None,
+         4: "ULV", # All voltage tiers
+         16: "LV",
+         64: "MV",
+         256: "HV",
+         1024: "EV",
+         4096: "IV",
+         16_384: "LuV",
+         65_536: "UV",
+         262_144: "UHV",
+         1_048_576: "UEV",
+         4_194_304: "UIV",
+         16_777_216: "ULuV",
+         67_108_864: "UEHV",
+         268_435_456: "UEIV",
+         1_073_741_824: "UIHV",
+         4_294_967_296: "MAX"
+         }
         
