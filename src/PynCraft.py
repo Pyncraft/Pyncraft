@@ -11,7 +11,7 @@ import modloader
 import tkinter as tk
 import json
 from loguru import logger
-
+import multiprocessing, code
 
 
 app = Ursina()
@@ -160,3 +160,4 @@ wrld = GenerateWorld(1)
 #wrld.Load("dirt.wrld")
 
 app.run()
+
