@@ -9,9 +9,9 @@ from utils import get_current_commit_hash, add_block
 import configparser
 import modloader
 import tkinter as tk
-import json
 from loguru import logger
-
+from pausemenu import PauseMenu
+from hotbar import *
 
 
 app = Ursina()
@@ -95,7 +95,7 @@ player.cursor = False
 
 try:
     if config['Camera']['Orthographic'] == "True":
-        loguru.info("Crosshair disabled")
+        logger.info("Crosshair disabled")
     else:
         crosshair = Crosshair()
 except Exception:

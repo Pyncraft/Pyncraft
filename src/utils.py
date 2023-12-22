@@ -2,6 +2,7 @@ from exceptions import *
 import subprocess
 import dill as pickle
 import json
+from VoxelTypes import Item
 import VoxelTypes
 import gc
 
@@ -55,3 +56,8 @@ def getallinstances(classe):
     for ob in gc.get_objects():
         if isinstance(ob, classe):
             instances.append(ob)
+
+def itemfactory(name, id, texture, model):
+    dicti = {"name": name, "id": id, "invtext": texture, "model": model}
+    
+    return dicti
