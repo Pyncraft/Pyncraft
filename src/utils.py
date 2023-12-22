@@ -57,7 +57,7 @@ def getallinstances(classe):
         if isinstance(ob, classe):
             instances.append(ob)
 
-def itemfactory(name, id, texture, model):
+def createitem(name, id, texture, model, classname):
     dicti = {"name": name, "id": id, "invtext": texture, "model": model}
     
-    return dicti
+    return type(classname, (Item,), dicti)
