@@ -61,3 +61,7 @@ def createitem(name, id, texture, model, classname):
     dicti = {"name": name, "id": id, "invtext": texture, "model": model}
     
     return type(classname, (Item,), dicti)
+
+def createblockitem(name, id, texture, model, classname, block):
+    dicti = {"name": name, "id": id, "invtext": texture, "model": model, "isBlockItem": True, "block": block}
+    return type(classname, (Item,), dicti)

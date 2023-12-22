@@ -1,5 +1,5 @@
 from utils import *
-from VoxelTypes import Block, Model, Item
+from VoxelTypes import Block, Model
 from ursina import * 
 from ursina.color import *
 from registry import DefaultBlockRegistry as registry
@@ -12,36 +12,26 @@ cobblestone_model = Model('cobblestone1', color(0,0,0), 'cube')
 
 
 class dirt(Block):
-    def __init__(self):
-        self.name = "Dirt"
-        self.id = "internal:dirt"
-        self.texture = dirt_model.texture
-        self.color = dirt_model.color
-        self.model = dirt_model.model
-        self.item = itemfactory(self.name, self.id, self.texture, dirt_model)
-        self.item.isBlockItem = True
-        self.item.block = self
+    name = "Dirt"
+    id = "internal:dirt"
+    texture = dirt_model.texture
+    color = dirt_model.color
+    model = dirt_model.model
+dirt.item = createblockitem(dirt().name, dirt().id, dirt().texture, dirt_model, "dirtitem", dirt)
+
 
 
 class cobblestone(Block):
-    def __init__(self):
-        self.name = "Cobblestone"
-        self.id = "internal:cobblestone"
-        self.texture = cobblestone_model.texture
-        self.color = cobblestone_model.color
-        self.model = cobblestone_model.model
-        self.item = itemfactory(self.name, self.id, self.texture, dirt_model)
-        self.item.isBlockItem = True
-        self.item.block = self
+    name = "Cobblestone"
+    id = "internal:cobblestone"
+    texture = cobblestone_model.texture
+    color = cobblestone_model.color
+    model = cobblestone_model.model
+cobblestone.item = createblockitem(cobblestone().name, cobblestone().id, cobblestone().texture, cobblestone_model, "cobblestoneitem", cobblestone)
 
-class cobblestonesphere(cobblestone):
-    def __init__(self):
-        super().__init__()
-        self.model = "sphere"
-        self.id = "internal:cobblestonesphere"
 
 
 
 def registerInternals():
     logger.info("Registering blocks")
-    registry.RegisterBlock(dirt); registry.RegisterBlock(cobblestone); registry.RegisterBlock(cobblestonesphere)
+    registry.RegisterBlock(dirt); registry.RegisterBlock(cobblestone)
