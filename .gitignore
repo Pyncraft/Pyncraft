@@ -11,3 +11,4 @@ keys.txt
 /dist
 *.cpython
 *.pyc
+__pycache__/

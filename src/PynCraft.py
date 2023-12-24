@@ -11,6 +11,7 @@ import modloader
 import tkinter as tk
 import json
 from loguru import logger
+import random
 
 
 
@@ -34,9 +35,11 @@ def input(key):
     if key == "escape" and pause_menu.enabled:
         pause_menu.close_menu()
         mouse.locked = True
+        sound.resume()
     elif key == "escape":
         pause_menu.enabled = True #Show the pause menu
         player.enabled = False
+        sound.pause()
     elif key == "right shift":
         player.disable() 
         def saveGame(): #Save and load helper funcs
@@ -95,7 +98,7 @@ player.cursor = False
 
 try:
     if config['Camera']['Orthographic'] == "True":
-        loguru.info("Crosshair disabled")
+        logger.info("Crosshair disabled")
     else:
         crosshair = Crosshair()
 except Exception:
@@ -114,9 +117,14 @@ else:
 
 wrld = None
 
-pause_menu = PauseMenu(player, wrld)
+soundpath = f"music/calm{random.randint(1,4)}.wav"
+sound = Audio(soundpath)
+logger.info(f"Playing sound {soundpath}")
+
+pause_menu = PauseMenu(player, wrld, sound)
 hotbar = Hotbar(num_slots=10)
 version_text = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
+
 
 
 modloader.modVars = {
@@ -158,5 +166,7 @@ wrld = GenerateWorld(1)
 #wrld.Save("dirt.wrld")
 #savefile(wrld.Save(), "dirt.wrld")
 #wrld.Load("dirt.wrld")
+
+
 
 app.run()

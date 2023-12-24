@@ -63,9 +63,10 @@ class Crosshair(Entity):
         self.enabled = True
 
 class PauseMenu(Entity):
-    def __init__(self, player, wrld):
+    def __init__(self, player, wrld, sound: Audio):
         logger.info("Pause menu has been initalized")
         self.player = player
+        self.sound = sound
         super().__init__(
             parent=camera.ui,
             enabled=False,
@@ -107,6 +108,7 @@ class PauseMenu(Entity):
         exit()
 
     def close_menu(self):
+        self.sound.resume()
         self.enabled = False
         mouse.locked = True
         self.player.enabled = True
