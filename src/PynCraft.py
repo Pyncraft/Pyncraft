@@ -12,8 +12,7 @@ import tkinter as tk
 import json
 from loguru import logger
 import random
-
-
+escapetimer = 0.0
 
 app = Ursina()
 
@@ -32,14 +31,16 @@ def input(key):
         if hit_info.hit:
             if mouse.hovered_entity.__class__ == Voxel: #Destroy the block 
                 destroy(mouse.hovered_entity)
-    if key == "escape" and pause_menu.enabled:
-        pause_menu.close_menu()
-        mouse.locked = True
-        sound.resume()
     elif key == "escape":
-        pause_menu.enabled = True #Show the pause menu
-        player.enabled = False
-        sound.pause()
+        if not pause_menu.enabled:
+            global escapetimer
+            escapetimer = time.time()
+            pause_menu.enabled = True #Show the pause menu
+            player.enabled = False
+            
+        else:
+            pause_menu.close_menu()
+            mouse.locked = True
     elif key == "right shift":
         player.disable() 
         def saveGame(): #Save and load helper funcs
@@ -121,7 +122,7 @@ soundpath = f"music/calm{random.randint(1,4)}.wav"
 sound = Audio(soundpath)
 logger.info(f"Playing sound {soundpath}")
 
-pause_menu = PauseMenu(player, wrld, sound)
+pause_menu = PauseMenu(player, wrld)
 hotbar = Hotbar(num_slots=10)
 version_text = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
 

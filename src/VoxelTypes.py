@@ -108,7 +108,6 @@ class PauseMenu(Entity):
         exit()
 
     def close_menu(self):
-        self.sound.resume()
         self.enabled = False
         mouse.locked = True
         self.player.enabled = True
