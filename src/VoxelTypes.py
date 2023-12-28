@@ -79,6 +79,27 @@ class Item():
     #    self.whenClicked = lambda: logger.debug(f"Item {self.name} has been interacted with")
     def __init_subclass__(self):
         logger.debug(f"Item {self.id} has been defined")
+class Hotbar(Entity):
+    def __init__(self, num_slots=10):
+        super().__init__(parent=camera.ui, scale=0.1, position=(-0.45, -0.4))
+        self.num_slots = num_slots
+        self.selected_slot = 0
+        self.count = [0,0,0,0,0,0,0,0,0,0]
+        self.items = [Item("None", "null", None, None)] * num_slots  # Initialize with default items
+
+        # Create slots using item.invtext for the texture
+        self.slots = []
+        for i in range(num_slots):
+            slot = Button(
+                parent=self,
+                model='quad',
+                texture=self.items[i].invtext,
+                color=color(1, 1, 1),
+                position=(0.8 * i, 0),
+                scale=0.8,  # Adjust the scale as needed for your textures
+                on_click=Func(self.select_slot, i)
+            )
+            self.slots.append(slot)
 
 
 
@@ -93,4 +114,50 @@ class BlockRegistry():
     def RegisterBlock(self, block: Block):
         logger.debug(f"Block {block().id} registered")
         self.blocks[block().id] = block
+class blockEnergyManager:
+    def __init__(self, camps=0, cvolts=0, maxstored=0, stored=0, samps=0):
+        self.camps = camps
+        self.cvolts = cvolts
+        self.maxstored = maxstored
+        self.stored = stored
+        self.samps = samps
+        self.tier = property(fget=self.getTier)
+    def withdraw(self, volts):
+        self.stored -= volts
+        return (volts, self.samps)
+    def deposit(self, volts, amps):
+        if volts > self.cvolts:
+            return
+        if amps > self.camps:
+            return
+        if amps != self.samps:
+            return
+        watts = volts
+        if watts > self.maxstored:
+            self.stored = self.maxstored
+        else:
+            self.stored += watts
+    def getTier(self):
+        rounded = min(filter(lambda x: x >= self.cvolts, voltiers.keys()))
+        return voltiers[rounded] # I don't even with this code
+voltiers = {
+         0: None,
+         4: "ULV", # All voltage tiers
+         16: "LV",
+         64: "MV",
+         256: "HV",
+         1024: "EV",
+         4096: "IV",
+         16_384: "LuV",
+         65_536: "UV",
+         262_144: "UHV",
+         1_048_576: "UEV",
+         4_194_304: "UIV",
+         16_777_216: "ULuV",
+         67_108_864: "UEHV",
+         268_435_456: "UEIV",
+         1_073_741_824: "UIHV",
+         4_294_967_296: "MAX"
+         }
         
+

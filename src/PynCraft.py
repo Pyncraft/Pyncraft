@@ -13,6 +13,7 @@ import tkinter as tk
 from loguru import logger
 from pausemenu import PauseMenu
 from hotbar import *
+import multiprocessing, code
 
 
 app = Ursina()
@@ -159,3 +160,4 @@ wrld = GenerateWorld(1)
 #wrld.Load("dirt.wrld")
 
 app.run()
+
