@@ -12,3 +12,4 @@ keys.txt
 *.cpython
 *.pyc
 __pycache__/
+.bin
