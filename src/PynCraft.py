@@ -72,7 +72,7 @@ def input(key):
 def update():
     if player.y < -255:
         player.y = 255
-ver = "0.2-alpha.2"
+ver = "0.2-alpha.3"
 
 
 
