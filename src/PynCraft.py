@@ -1,3 +1,4 @@
+
 import ctypes, os
 from ursina import *
 from ursina.color import *
@@ -9,10 +10,10 @@ from utils import get_current_commit_hash, add_block
 import configparser
 import modloader
 import tkinter as tk
-import json
 from loguru import logger
-import random
-escapetimer = 0.0
+from pausemenu import PauseMenu
+from hotbar import *
+
 
 app = Ursina()
 
@@ -31,16 +32,12 @@ def input(key):
         if hit_info.hit:
             if mouse.hovered_entity.__class__ == Voxel: #Destroy the block 
                 destroy(mouse.hovered_entity)
+    if key == "escape" and pause_menu.enabled:
+        pause_menu.close_menu()
+        mouse.locked = True
     elif key == "escape":
-        if not pause_menu.enabled:
-            global escapetimer
-            escapetimer = time.time()
-            pause_menu.enabled = True #Show the pause menu
-            player.enabled = False
-            
-        else:
-            pause_menu.close_menu()
-            mouse.locked = True
+        pause_menu.enabled = True #Show the pause menu
+        player.enabled = False
     elif key == "right shift":
         player.disable() 
         def saveGame(): #Save and load helper funcs
@@ -118,14 +115,9 @@ else:
 
 wrld = None
 
-soundpath = f"music/calm{random.randint(1,4)}.wav"
-sound = Audio(soundpath)
-logger.info(f"Playing sound {soundpath}")
-
 pause_menu = PauseMenu(player, wrld)
 hotbar = Hotbar(num_slots=10)
 version_text = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
-
 
 
 modloader.modVars = {
@@ -154,8 +146,6 @@ logger.info("Mods initalized")
 
 hotbar.add_item(cobblestone().item, 128, 0)
 hotbar.add_item(dirt().item, 128, 1)
-hotbar.add_item(cobblestonesphere().item, 128, 2)
-
 
 
 wrld = GenerateWorld(1)
@@ -168,6 +158,5 @@ wrld = GenerateWorld(1)
 #savefile(wrld.Save(), "dirt.wrld")
 #wrld.Load("dirt.wrld")
 
-
-
 app.run()
+=======
