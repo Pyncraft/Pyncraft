@@ -9,3 +9,7 @@ pyncraft.cmd
 pyncraft.exe
 keys.txt
 /dist
+*.cpython
+*.pyc
+__pycache__/
+.bin

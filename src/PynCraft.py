@@ -1,3 +1,4 @@
+
 import ctypes, os
 from ursina import *
 from ursina.color import *
@@ -9,8 +10,9 @@ from utils import get_current_commit_hash, add_block
 import configparser
 import modloader
 import tkinter as tk
-import json
 from loguru import logger
+from pausemenu import PauseMenu
+from hotbar import *
 import multiprocessing, code
 
 
@@ -71,7 +73,7 @@ def input(key):
 def update():
     if player.y < -255:
         player.y = 255
-ver = "0.2-alpha.2"
+ver = "0.2-alpha.3"
 
 
 
@@ -145,8 +147,6 @@ logger.info("Mods initalized")
 
 hotbar.add_item(cobblestone().item, 128, 0)
 hotbar.add_item(dirt().item, 128, 1)
-hotbar.add_item(cobblestonesphere().item, 128, 2)
-
 
 
 wrld = GenerateWorld(1)
