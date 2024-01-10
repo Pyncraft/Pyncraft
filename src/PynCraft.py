@@ -13,8 +13,12 @@ import tkinter as tk
 from loguru import logger
 from pausemenu import PauseMenu
 from hotbar import *
+import ursinanetworking as net
+import multiplayer as mp
+import builtins
+multiplayer = mp.selectmultiplayer()
 
-
+mp.setmclient()
 app = Ursina()
 
 
@@ -56,10 +60,11 @@ def input(key):
                         text = "Save",  
                         command = saveGame) 
         saveButton.pack()
-        loadButton = tk.Button(saveframe, 
-                        text = "Load",  
-                        command = loadGame) 
-        loadButton.pack()
+        if not multiplayer:
+            loadButton = tk.Button(saveframe, 
+                            text = "Load",  
+                            command = loadGame) 
+            loadButton.pack()
         saveframe.mainloop()
         player.enable()
         
@@ -68,10 +73,14 @@ def input(key):
             hotbar.select_slot(i)
     #logger.debug(f"Key {key} pressed")
 
+
 @logger.catch
 def update():
     if player.y < -255:
         player.y = 255
+    if multiplayer:
+        mp.multiclient.process_net_events()
+        
 ver = "0.2-alpha.3"
 
 
@@ -83,7 +92,7 @@ player = FirstPersonController()
 
 if os.name == "nt": # Change the icon on windows, how do I do it for linux?
 
-    myappid = u'mycompany.myproduct.subproduct.version' # arbitrary string
+    myappid = u'Pyncraft.Pyncraft.Game.V0' # arbitrary string
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 
@@ -114,6 +123,8 @@ else:
     camera.clip_plane_far = 100
 
 wrld = None
+
+builtins.gwrld = wrld
 
 pause_menu = PauseMenu(player, wrld)
 hotbar = Hotbar(num_slots=10)
@@ -147,8 +158,8 @@ logger.info("Mods initalized")
 hotbar.add_item(cobblestone().item, 128, 0)
 hotbar.add_item(dirt().item, 128, 1)
 
-
-wrld = GenerateWorld(1)
+if not multiplayer:
+    wrld = GenerateWorld(1)
 # savefile(wrld.Save(), "dirt.wrld")
 # wrld.blocks = {}
 

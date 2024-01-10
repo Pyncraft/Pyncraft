@@ -34,14 +34,19 @@ class World():
             json.dump(save, f)
     @logger.catch
     def Load(self, filename: str):
-        logger.info(f"Loading world {filename}")
+        logger.info(f"Accessing world {filename}")
         with open(filename, "r+") as f:
             save = json.load(f)
+        self.LoadFromDict(save)
+    def LoadFromDict(self, save):
+        logger.info(f"Loading world...")
         blocks = save["blocks"]
         for i in blocks:
             block = breg.blocks[blocks[i]]()
             location = i.split("=")
             self.blocks[i] = add_block(block, tuple(map(float,location)), self)
+
+            
     def Unload(self):
         logger.info(f"Unloading world")
         for i in self.blocks:
