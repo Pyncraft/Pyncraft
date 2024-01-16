@@ -41,6 +41,8 @@ def initclientfuncs(): #Reason: Multiclient initalizes as None, so we need to wa
         logger.error(f"Multiplayer error: {Reason}")
     @multiclient.event
     def currentWorld(world):
+        print("gwrld:")
+        print(gwrld)
         gwrld.Unload()
         gwrld.LoadFromDict(world)
 

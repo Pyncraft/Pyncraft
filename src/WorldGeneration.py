@@ -45,6 +45,8 @@ class World():
             block = breg.blocks[blocks[i]]()
             location = i.split("=")
             self.blocks[i] = add_block(block, tuple(map(float,location)), self)
+    def __str__(self):
+        return "World"
 
             
     def Unload(self):
