@@ -1,0 +1,2 @@
+Idk why, but in the previews, the SVG does not work
+It still works.
