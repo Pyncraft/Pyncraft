@@ -13,9 +13,10 @@ import tkinter as tk
 from loguru import logger
 from pausemenu import PauseMenu
 from hotbar import *
+import random
 
 
-app = Ursina()
+app = Ursina(borderless=False, icon = "icons/logo64.ico")
 
 
 @logger.catch
@@ -148,7 +149,7 @@ hotbar.add_item(cobblestone().item, 128, 0)
 hotbar.add_item(dirt().item, 128, 1)
 
 
-wrld = GenerateWorld(1)
+wrld = GenerateWorld(random.randint(-2**16,2**16))
 # savefile(wrld.Save(), "dirt.wrld")
 # wrld.blocks = {}
 

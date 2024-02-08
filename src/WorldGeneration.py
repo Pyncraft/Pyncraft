@@ -22,13 +22,15 @@ class FlatWorldGenerator:
 
 class NormalWorldGenerator:
     name = "normalworld"
-    octaves = 1.3
+    octaves = 1
+    amplification = 25
     def generate(self, seed):
         wrld = World()
         for x in range(-50,50):
             for z in range(-50,50):
-                y = noise.pnoise2(x/100.0, z/100.0, octaves=self.octaves, persistence=0.5, lacunarity=2.0, repeatx=1024, base=0)
-                print((x, y, z))
+                y = round(noise.snoise2(x/100.0, z/100.0, base=seed, octaves=self.octaves) * self.amplification)
+                
+                print(f"Chunk {(x + 50)}{(z + 50)}")
                 
                 add_block(dirt(), (x, y, z), wrld)
         return wrld
