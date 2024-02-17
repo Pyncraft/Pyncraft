@@ -16,7 +16,7 @@ from hotbar import *
 import random
 
 
-app = Ursina(borderless=False, icon = "icons/logo64.ico")
+app = Ursina(borderless=False)
 
 
 @logger.catch

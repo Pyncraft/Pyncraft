@@ -30,7 +30,7 @@ class NormalWorldGenerator:
             for z in range(-50,50):
                 y = round(noise.snoise2(x/100.0, z/100.0, base=seed, octaves=self.octaves) * self.amplification)
                 
-                print(f"Chunk {(x + 50)}{(z + 50)}")
+                #print(f"Chunk {(x + 50)}{(z + 50)}")
                 
                 add_block(dirt(), (x, y, z), wrld)
         return wrld
@@ -46,6 +46,7 @@ def makeWorld():
 class World():
     blocks = {}
     playerpos = [0,0,0]
+    terrain = Entity(model=None, collider=None)
     #hotbar = None
     #hotbarcount = None
     version = 1

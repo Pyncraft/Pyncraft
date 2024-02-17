@@ -21,6 +21,9 @@ def get_current_commit_hash():
         # Handle the case where the Git command fails
         return ""
 
+def runfunc(function):
+    return function() #Idk why I did this
+
 
 def create_blockitem_id(namespace="internal", name=""):
     return namespace + ":" + name
@@ -35,6 +38,8 @@ def load_class(file_path):
 
 def add_block(block: VoxelTypes.Block, position: tuple, world):
     world.blocks[f"{position[0]}={position[1]}={position[2]}"] = VoxelTypes.Voxel(Block=block, position=position)
+    world.blocks[f"{position[0]}={position[1]}={position[2]}"].parent = world.terrain
+
     return world.blocks[f"{position[0]}={position[1]}={position[2]}"]
 
 def savetuple(obj):
