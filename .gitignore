@@ -13,3 +13,4 @@ keys.txt
 *.pyc
 __pycache__/
 .bin
+venv
