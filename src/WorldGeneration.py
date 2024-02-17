@@ -5,20 +5,52 @@ import json
 from utils import add_block
 from registry import DefaultBlockRegistry as breg
 from loguru import logger
-@logger.catch
+import noise
+class ExampleWorldGenerator:
+    name = "aGenerator"
+    def generate(self, seed):
+        #Generate...
+        pass
+class FlatWorldGenerator:
+    name = "flatworld"
+    def generate(self, seed):
+        mcworld = World()
+        for z in range(30):
+            for x in range(30):
+                mcworld.blocks[f"{x}=0.0={z}"] = Voxel(Block=dirt(), position=(x,0,z))
+        return mcworld
+
+class NormalWorldGenerator:
+    name = "normalworld"
+    octaves = 1
+    amplification = 25
+    def generate(self, seed):
+        wrld = World()
+        for x in range(-50,50):
+            for z in range(-50,50):
+
+                y = round(noise.pnoise2(x/100.0, z/100.0, base=seed, octaves=self.octaves) * self.amplification)
+
+                chunk = int(f"{(x + 50)}{str(z + 50).zfill(2)}")
+                logger.info(f"{round((chunk/9999)*100, 1)}% done generating\033[1A")
+
+                
+                add_block(dirt(), (x, y, z), wrld)
+        print("\033[1B")
+        return wrld
+
+#@logger.catch
 def GenerateWorld(Seed: int):
     logger.info(f"Generating world with seed {Seed}")
-    mcworld = World()
-    for z in range(30):
-        for x in range(30):
-            mcworld.blocks[f"{x}=0.0={z}"] = Voxel(Block=dirt(), position=(x,0,z))
-    return mcworld
+    generator = NormalWorldGenerator()
+    return generator.generate(Seed)
+    
 def makeWorld():
     return World()
-
 class World():
     blocks = {}
     playerpos = [0,0,0]
+    terrain = Entity(model=None, collider=None)
     #hotbar = None
     #hotbarcount = None
     version = 1
