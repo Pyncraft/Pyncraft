@@ -2,7 +2,6 @@ import tkinter as tk
 import ursinanetworking as net
 from loguru import logger
 multiplayer = False
-multiclient = None
 
 def selectmultiplayer():
     def singleplayr():
@@ -24,15 +23,10 @@ def selectmultiplayer():
     modemenu.mainloop()
     return multiplayer
 
-def setmclient():
-    global multiclient
-    if multiplayer:
-        multiclient = net.UrsinaNetworkingClient("localhost", 25800)
 
-def initclientfuncs(): #Reason: Multiclient initalizes as None, so we need to wait until it is set to the multiplayer client.
-    global onConnectionEstablished
-    global onConnectionError
-    global currentWorld
+class MultiplayerClient:
+    def __init__(self):
+        self.multiclient = net.UrsinaNetworkingClient("localhost", 25800)
     @multiclient.event
     def onConnectionEstablished():
         logger.info("Connected to multiplayer server")

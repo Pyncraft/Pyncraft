@@ -18,7 +18,8 @@ import multiplayer as mp
 import builtins
 multiplayer = mp.selectmultiplayer()
 
-mp.setmclient()
+if multiplayer == True:
+    mclient = mp.MultiplayerClient()
 app = Ursina()
 
 
