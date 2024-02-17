@@ -32,7 +32,7 @@ class NormalWorldGenerator:
                 y = round(noise.pnoise2(x/100.0, z/100.0, base=seed, octaves=self.octaves) * self.amplification)
 
                 chunk = int(f"{(x + 50)}{str(z + 50).zfill(2)}")
-                logger.info(f"{round((chunk/9999)*100, 1)} percent done generating\033[1A")
+                logger.info(f"{round((chunk/9999)*100, 1)}% done generating\033[1A")
 
                 
                 add_block(dirt(), (x, y, z), wrld)
