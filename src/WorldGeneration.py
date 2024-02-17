@@ -28,11 +28,15 @@ class NormalWorldGenerator:
         wrld = World()
         for x in range(-50,50):
             for z in range(-50,50):
-                y = round(noise.snoise2(x/100.0, z/100.0, base=seed, octaves=self.octaves) * self.amplification)
-                
-                #print(f"Chunk {(x + 50)}{(z + 50)}")
+
+                y = round(noise.pnoise2(x/100.0, z/100.0, base=seed, octaves=self.octaves) * self.amplification)
+
+                chunk = int(f"{(x + 50)}{str(z + 50).zfill(2)}")
+                logger.info(f"{round((chunk/9999)*100, 1)} percent done generating\033[1A")
+
                 
                 add_block(dirt(), (x, y, z), wrld)
+        print("\033[1B")
         return wrld
 
 #@logger.catch
