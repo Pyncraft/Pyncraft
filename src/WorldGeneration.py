@@ -22,7 +22,7 @@ class FlatWorldGenerator:
 
 class NormalWorldGenerator:
     name = "normalworld"
-    octaves = 1
+    octaves = 16
     amplification = 25
     def generate(self, seed):
         wrld = World()
