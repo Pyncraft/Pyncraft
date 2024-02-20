@@ -6,6 +6,7 @@ import json
 from VoxelTypes import Item
 import VoxelTypes
 import gc
+import tkinter as tk
 
 
 
@@ -71,3 +72,28 @@ def createitem(name, id, texture, model, classname):
 def createblockitem(name, id, texture, model, classname, block):
     dicti = {"name": name, "id": id, "invtext": texture, "model": model, "isBlockItem": True, "block": block}
     return type(classname, (Item,), dicti)
+
+# Global variable to store the output
+output = None
+
+def choice(name: str, choicenames: tuple, choiceouts: tuple):
+    def choice1():
+        global output
+        output = choiceouts[0]
+        saveframe.destroy()
+
+    def choice2():
+        global output
+        output = choiceouts[1]
+        saveframe.destroy()
+
+    saveframe = tk.Tk()
+    saveframe.title(name) 
+    saveframe.geometry('400x200')
+    saveButton = tk.Button(saveframe, text=choicenames[0], command=choice1) 
+    saveButton.pack()
+    loadButton = tk.Button(saveframe, text=choicenames[1], command=choice2) 
+    loadButton.pack()
+    saveframe.mainloop()
+
+    return output

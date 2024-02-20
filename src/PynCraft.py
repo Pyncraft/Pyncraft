@@ -5,7 +5,7 @@ from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from VoxelTypes import *
 from Objects import *
-from WorldGeneration import GenerateWorld, World, makeWorld
+from WorldGeneration import GenerateWorld, World, makeWorld, NormalWorldGenerator, FlatWorldGenerator
 from utils import get_current_commit_hash, add_block
 import configparser
 import modloader
@@ -149,7 +149,7 @@ hotbar.add_item(cobblestone().item, 128, 0)
 hotbar.add_item(dirt().item, 128, 1)
 
 
-wrld = GenerateWorld(random.randint(-2**16,2**16))
+wrld = GenerateWorld(random.randint(-2**16,2**16), choice("World type", ("Normal", "Flat"), (NormalWorldGenerator, FlatWorldGenerator)))
 # savefile(wrld.Save(), "dirt.wrld")
 # wrld.blocks = {}
 

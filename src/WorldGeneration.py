@@ -40,9 +40,9 @@ class NormalWorldGenerator:
         return wrld
 
 #@logger.catch
-def GenerateWorld(Seed: int):
+def GenerateWorld(Seed: int, gen):
     logger.info(f"Generating world with seed {Seed}")
-    generator = NormalWorldGenerator()
+    generator = gen()
     return generator.generate(Seed)
     
 def makeWorld():
