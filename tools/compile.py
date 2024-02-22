@@ -17,4 +17,4 @@ def recursive_copy(src, dest):
             recursive_copy(file_path, new_dest)
 command = "python -m nuitka --follow-imports src/PynCraft.py --enable-plugin=tk-inter --include-package=ursina --standalone"
 os.system(command)
-recursive_copy("assets", "PynCraft.dist")
+recursive_copy("assets", "pyncraft.dist")

@@ -1,4 +1,3 @@
-
 import ctypes, os
 from ursina import *
 from ursina.color import *
@@ -73,6 +72,7 @@ def input(key):
 def update():
     if player.y < -255:
         player.y = 255
+    posvel_text.text = f"X:{round(player.position[0], 3)}\nY:{round(player.position[1], 3)}\nZ:{round(player.position[2], 3)}"
 ver = "0.2-alpha.4"
 
 
@@ -119,6 +119,7 @@ wrld = None
 pause_menu = PauseMenu(player, wrld)
 hotbar = Hotbar(num_slots=10)
 version_text = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
+posvel_text = Text(text="", x=-0.875, y=0.5, scale=1, color=white)
 
 
 modloader.modVars = {
