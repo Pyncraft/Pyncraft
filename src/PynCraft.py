@@ -3,7 +3,7 @@ import ctypes, os
 from ursina import *
 from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
-from VoxelTypes import *
+from VoxelTypes import Voxel, Crosshair
 from Objects import *
 from WorldGeneration import GenerateWorld, World, makeWorld
 from utils import get_current_commit_hash, add_block
@@ -12,14 +12,13 @@ import modloader
 import tkinter as tk
 from loguru import logger
 from pausemenu import PauseMenu
-from hotbar import *
+from hotbar import Hotbar
 import ursinanetworking as net
 import multiplayer as mp
 import builtins
 multiplayer = mp.selectmultiplayer()
 
-if multiplayer == True:
-    mclient = mp.MultiplayerClient()
+
 app = Ursina()
 
 
@@ -80,7 +79,7 @@ def update():
     if player.y < -255:
         player.y = 255
     if multiplayer:
-        mp.multiclient.process_net_events()
+        mclient.multiclient.process_net_events()
         
 ver = "0.2-alpha.3"
 
@@ -169,5 +168,9 @@ if not multiplayer:
 #wrld.Save("dirt.wrld")
 #savefile(wrld.Save(), "dirt.wrld")
 #wrld.Load("dirt.wrld")
+
+if multiplayer == True:
+    mp.setwrld(wrld)
+    mclient = mp.CreateMultiplayerClient("localhost", 25800)
 
 app.run()

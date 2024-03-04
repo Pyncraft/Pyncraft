@@ -53,3 +53,5 @@ class World():
         logger.info(f"Unloading world")
         for i in self.blocks:
             destroy(self.blocks[i])
+
+wrld = GenerateWorld(0)
