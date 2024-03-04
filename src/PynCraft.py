@@ -41,10 +41,10 @@ def input(key):
     elif key == "right shift":
         player.disable() 
         def saveGame(): #Save and load helper funcs
-            wrld.Save(inputtxt.get("1.0",'end-1c'))
+            wrld.Save("worlds/" + inputtxt.get("1.0",'end-1c') + ".wrld")
         def loadGame():
             wrld.Unload()
-            wrld.Load(inputtxt.get("1.0",'end-1c'))
+            wrld.Load("worlds/" + inputtxt.get("1.0",'end-1c') + ".wrld")
         saveframe = tk.Tk()
         saveframe.title("Save Input") 
         saveframe.geometry('400x200')
@@ -148,6 +148,7 @@ logger.info("Mods initalized")
 
 hotbar.add_item(cobblestone().item, 128, 0)
 hotbar.add_item(dirt().item, 128, 1)
+hotbar.add_item(cobbleSphere().item, 128, 2)
 
 
 wrld = GenerateWorld(random.randint(-2**16,2**16), choice("World type", ("Normal", "Flat"), (NormalWorldGenerator, FlatWorldGenerator)))
