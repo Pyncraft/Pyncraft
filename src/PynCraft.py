@@ -1,17 +1,18 @@
-
 import ctypes, os
 from ursina import *
 from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from VoxelTypes import Voxel, Crosshair
 from Objects import *
-from WorldGeneration import GenerateWorld, World, makeWorld
+from WorldGeneration import GenerateWorld, World, makeWorld, NormalWorldGenerator, FlatWorldGenerator
 from utils import get_current_commit_hash, add_block
 import configparser
 import modloader
 import tkinter as tk
 from loguru import logger
 from pausemenu import PauseMenu
+
+import random
 from hotbar import Hotbar
 import ursinanetworking as net
 import multiplayer as mp
@@ -19,7 +20,8 @@ import builtins
 multiplayer = mp.selectmultiplayer()
 
 
-app = Ursina()
+
+app = Ursina(borderless=False)
 
 
 @logger.catch
@@ -48,10 +50,10 @@ def input(key):
     elif key == "right shift":
         player.disable() 
         def saveGame(): #Save and load helper funcs
-            wrld.Save(inputtxt.get("1.0",'end-1c'))
+            wrld.Save("worlds/" + inputtxt.get("1.0",'end-1c') + ".wrld")
         def loadGame():
             wrld.Unload()
-            wrld.Load(inputtxt.get("1.0",'end-1c'))
+            wrld.Load("worlds/" + inputtxt.get("1.0",'end-1c') + ".wrld")
         saveframe = tk.Tk()
         saveframe.title("Save Input") 
         saveframe.geometry('400x200')
@@ -81,10 +83,13 @@ def input(key):
 def update():
     if player.y < -255:
         player.y = 255
+
+    posvel_text.text = f"X:{round(player.position[0], 3)}\nY:{round(player.position[1], 3)}\nZ:{round(player.position[2], 3)}"
     if multiplayer:
         mclient.multiclient.process_net_events()
         
-ver = "0.2-alpha.3"
+ver = "0.2-alpha.5-multiplayer-test"
+
 
 
 
@@ -132,6 +137,7 @@ builtins.gwrld = wrld
 pause_menu = PauseMenu(player, wrld)
 hotbar = Hotbar(num_slots=10)
 version_text = Text(text=f"Pyncraft {ver}-{get_current_commit_hash()[:5]}", x=0, y=0.5, scale=1, color=white)
+posvel_text = Text(text="", x=-0.875, y=0.5, scale=1, color=white)
 
 
 modloader.modVars = {
@@ -160,11 +166,14 @@ logger.info("Mods initalized")
 
 hotbar.add_item(cobblestone().item, 128, 0)
 hotbar.add_item(dirt().item, 128, 1)
+hotbar.add_item(cobbleSphere().item, 128, 2)
+
 
 if not multiplayer:
-    wrld = GenerateWorld(1)
+    wrld = GenerateWorld(random.randint(-2**16,2**16), choice("World type", ("Normal", "Flat"), (NormalWorldGenerator, FlatWorldGenerator)))
 else:
     wrld = World()
+
 # savefile(wrld.Save(), "dirt.wrld")
 # wrld.blocks = {}
 

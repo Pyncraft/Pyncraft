@@ -29,6 +29,12 @@ class cobblestone(Block):
     model = cobblestone_model.model
 cobblestone.item = createblockitem(cobblestone().name, cobblestone().id, cobblestone().texture, cobblestone_model, "cobblestoneitem", cobblestone)
 
+class cobbleSphere(cobblestone):
+    name = "Cobblestone Sphere"
+    id = "internal:cobblesphere"
+    model = "sphere"
+cobbleSphere.item = createblockitem(cobbleSphere().name, cobbleSphere().id, cobblestone().texture, cobblestone_model, "cobblestonesphereitem", cobbleSphere)
+
 
 
 
