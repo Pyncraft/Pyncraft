@@ -1,0 +1,35 @@
+[93mwarning: Tried to instantiate Entity before Ursina. Please create an instance of Ursina first (app = Ursina()) Traceback(filename='/home/xande/Desktop/Pyncraft/.bin/lib/python3.11/site-packages/ursina/prefabs/button.py', lineno=13, function='__init__', code_context=['        super().__init__(parent=parent)\n'], index=0, positions=Positions(lineno=13, end_lineno=13, col_offset=8, end_col_offset=39)) [0m
+info: Using primary monitor: Monitor(x=0, y=0, width=2560, height=1440, width_mm=597, height_mm=336, name='DP-0', is_primary=True)
+set window position: Vec2(256, 144)
+package_folder: /home/xande/Desktop/Pyncraft/.bin/lib/python3.11/site-packages/ursina
+asset_folder: src
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+[93mwarning: missing texture: 'null' [0m
+os: Linux
+development mode: True
+application successfully started
+[UrsinaNetworkingClient / handle] Client connected successfully !
+info: changed aspect ratio: 1.778 -> 1.778
+* interrupt by keyboard
+os: Linux
+development mode: True
+application successfully started
+[UrsinaNetworkingClient / handle] Client connected successfully !

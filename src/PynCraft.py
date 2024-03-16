@@ -2,7 +2,7 @@ import ctypes, os
 from ursina import *
 from ursina.color import *
 from ursina.prefabs.first_person_controller import FirstPersonController
-from VoxelTypes import *
+from VoxelTypes import Voxel, Crosshair
 from Objects import *
 from WorldGeneration import GenerateWorld, World, makeWorld, NormalWorldGenerator, FlatWorldGenerator
 from utils import get_current_commit_hash, add_block
@@ -11,8 +11,14 @@ import modloader
 import tkinter as tk
 from loguru import logger
 from pausemenu import PauseMenu
-from hotbar import *
+
 import random
+from hotbar import Hotbar
+import ursinanetworking as net
+import multiplayer as mp
+import builtins
+multiplayer = mp.selectmultiplayer()
+
 
 
 app = Ursina(borderless=False)
@@ -25,6 +31,9 @@ def input(key):
         if hit_info.hit:
             try:
                 add_block(hotbar.items[hotbar.selected_slot].block, hit_info.entity.position + hit_info.normal, wrld) #Add block
+                if multiplayer:
+                    pos = hit_info.entity.position + hit_info.normal
+                    mclient.send_message("placeBlock", {"id": hotbar.items[hotbar.selected_slot].block().id, "pos": f"{pos[0]}={pos[1]}={pos[2]}"})
             except AttributeError:
                 pass #Clearly empty hotbar slot
     if key == 'left mouse down' and mouse.hovered_entity:
@@ -56,10 +65,11 @@ def input(key):
                         text = "Save",  
                         command = saveGame) 
         saveButton.pack()
-        loadButton = tk.Button(saveframe, 
-                        text = "Load",  
-                        command = loadGame) 
-        loadButton.pack()
+        if not multiplayer:
+            loadButton = tk.Button(saveframe, 
+                            text = "Load",  
+                            command = loadGame) 
+            loadButton.pack()
         saveframe.mainloop()
         player.enable()
         
@@ -68,12 +78,18 @@ def input(key):
             hotbar.select_slot(i)
     #logger.debug(f"Key {key} pressed")
 
+
 @logger.catch
 def update():
     if player.y < -255:
         player.y = 255
+
     posvel_text.text = f"X:{round(player.position[0], 3)}\nY:{round(player.position[1], 3)}\nZ:{round(player.position[2], 3)}"
-ver = "0.2-alpha.4"
+    if multiplayer:
+        mclient.multiclient.process_net_events()
+        
+ver = "0.2-alpha.5-multiplayer-test"
+
 
 
 
@@ -84,7 +100,7 @@ player = FirstPersonController()
 
 if os.name == "nt": # Change the icon on windows, how do I do it for linux?
 
-    myappid = u'mycompany.myproduct.subproduct.version' # arbitrary string
+    myappid = u'Pyncraft.Pyncraft.Game.V0' # arbitrary string
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 
@@ -115,6 +131,8 @@ else:
     camera.clip_plane_far = 100
 
 wrld = None
+
+builtins.gwrld = wrld
 
 pause_menu = PauseMenu(player, wrld)
 hotbar = Hotbar(num_slots=10)
@@ -151,7 +169,11 @@ hotbar.add_item(dirt().item, 128, 1)
 hotbar.add_item(cobbleSphere().item, 128, 2)
 
 
-wrld = GenerateWorld(random.randint(-2**16,2**16), choice("World type", ("Normal", "Flat"), (NormalWorldGenerator, FlatWorldGenerator)))
+if not multiplayer:
+    wrld = GenerateWorld(random.randint(-2**16,2**16), choice("World type", ("Normal", "Flat"), (NormalWorldGenerator, FlatWorldGenerator)))
+else:
+    wrld = World()
+
 # savefile(wrld.Save(), "dirt.wrld")
 # wrld.blocks = {}
 
@@ -160,5 +182,8 @@ wrld = GenerateWorld(random.randint(-2**16,2**16), choice("World type", ("Normal
 #wrld.Save("dirt.wrld")
 #savefile(wrld.Save(), "dirt.wrld")
 #wrld.Load("dirt.wrld")
+
+if multiplayer == True:
+    mclient = mp.CreateMultiplayerClient("localhost", 25800)
 
 app.run()
