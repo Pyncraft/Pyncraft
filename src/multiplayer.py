@@ -24,11 +24,10 @@ def selectmultiplayer():
     modemenu.mainloop()
     return multiplayer
 
-def setwrld(wrld):
-    global mworld
-    mworld = wrld
+
 
 def CreateMultiplayerClient(host, port):
+    from PynCraft import wrld
     class MultiplayerClient:
         multiclient = net.UrsinaNetworkingClient(host, port)
         @multiclient.event
@@ -39,10 +38,8 @@ def CreateMultiplayerClient(host, port):
             logger.error(f"Multiplayer error: {Reason}")
         @multiclient.event
         def currentWorld(world):
-            print(mworld)
-            print("nmnmnm")
-            mworld.Unload() #the garbage collector will not like this one
-            mworld.LoadFromDict(world)
+            wrld.Unload() 
+            wrld.LoadFromDict(world)
     return MultiplayerClient() #TODO: add host and ports as args to MultiplayerClient, i hate this spaghet
 
 

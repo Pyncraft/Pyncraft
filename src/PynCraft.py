@@ -29,6 +29,9 @@ def input(key):
         if hit_info.hit:
             try:
                 add_block(hotbar.items[hotbar.selected_slot].block, hit_info.entity.position + hit_info.normal, wrld) #Add block
+                if multiplayer:
+                    pos = hit_info.entity.position + hit_info.normal
+                    mclient.send_message("placeBlock", {"id": hotbar.items[hotbar.selected_slot].block().id, "pos": f"{pos[0]}={pos[1]}={pos[2]}"})
             except AttributeError:
                 pass #Clearly empty hotbar slot
     if key == 'left mouse down' and mouse.hovered_entity:
@@ -160,6 +163,8 @@ hotbar.add_item(dirt().item, 128, 1)
 
 if not multiplayer:
     wrld = GenerateWorld(1)
+else:
+    wrld = World()
 # savefile(wrld.Save(), "dirt.wrld")
 # wrld.blocks = {}
 
@@ -170,7 +175,6 @@ if not multiplayer:
 #wrld.Load("dirt.wrld")
 
 if multiplayer == True:
-    mp.setwrld(wrld)
     mclient = mp.CreateMultiplayerClient("localhost", 25800)
 
 app.run()
